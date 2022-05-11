@@ -95,7 +95,7 @@ def show_page():
         
     else:
         # Download the template based on the value dictionary
-        st.sidebar.download_button("Download template", pd.DataFrame([values.keys()]).to_csv(sep = ';',header = False ,index=False), file_name="template.csv")
+        st.sidebar.download_button("Download template", pd.DataFrame([values.keys()]).to_csv(sep = ';',header = False ,index=False), file_name="template.xlsx")
         # Element to upload a file
         uploadedFile  = st.sidebar.file_uploader("Import the excel with all your data",type=["xlsx","csv"])
         
