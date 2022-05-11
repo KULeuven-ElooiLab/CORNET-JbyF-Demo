@@ -190,7 +190,7 @@ def feature_ML_Train():
         st.session_state['ready for training']=False
 
     # select the database that you want to use for the training
-    databases = {"synthetic (n=712)": "docs\TrainDatabase_712.xlsx"}
+    databases = {"synthetic (n=712)": "docsTrainDatabase_712.xlsx"}
     col1, col2 = st.columns(2)
     uploadedFile  = col2.file_uploader("Import the excel with all your data",type=["xlsx","csv"])
     if uploadedFile:
