@@ -1,1 +1,11 @@
-st_clickable_images==1.8.1
+hydralit_components==1.0.9
+matplotlib==3.4.3
+numpy==1.21.2
+pandas==1.3.5
+Pillow==9.1.0
+pyDOE==0.3.8
+requests==2.27.1
+scikit_learn==1.0.2
+st_clickable_images==0.0.3
+streamlit==1.8.1
+streamlit_tags==1.2.8
