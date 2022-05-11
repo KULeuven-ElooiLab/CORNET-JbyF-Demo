@@ -9,4 +9,4 @@ scikit_learn==1.0.2
 st_clickable_images==0.0.3
 streamlit==1.8.1
 streamlit_tags==1.2.8
-openpyxl==1
+openpyxl==3.0.9
