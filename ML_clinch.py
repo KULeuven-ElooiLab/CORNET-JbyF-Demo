@@ -15,9 +15,9 @@ def show_page():
     def predict_strength(test):
         # A model for each output variable (TT= top tensile test, otherwise ST = shear test)
         if test=="TT":
-            openFile = r"C:\Users\u0148983\OneDrive - KU Leuven\PythonCode\Scikit_learn\SavedModels\SVR_Max_top_tensile_force_TT.pkl"
+            openFile = "C:/Users/u0148983/OneDrive - KU Leuven/PythonCode/Scikit_learn/SavedModels/SVR_Max_top_tensile_force_TT.pkl"
         else:
-            openFile = r"C:\Users\u0148983\OneDrive - KU Leuven\PythonCode\Scikit_learn\SavedModels\SVR_Max_shear_tensile_force_ST.pkl"
+            openFile = "C:/Users/u0148983/OneDrive - KU Leuven/PythonCode/Scikit_learn/SavedModels/SVR_Max_shear_tensile_force_ST.pkl"
         loaded_model = pickle.load(open(openFile , 'rb')) 
         # Must be in the same order as when training the model   
         X = [[material_top,
