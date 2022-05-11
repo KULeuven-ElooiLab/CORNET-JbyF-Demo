@@ -1,1 +1,1 @@
-st_clickable_images
+st_clickable_images==1.8.1
