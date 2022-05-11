@@ -169,7 +169,7 @@ def show_page():
             df['ST_frac']=getForce(val,'ST_frac')
             file_name = st.text_input('Name the file', "Strength_predictions")
             # Make it posible to download the results as csv file
-            st.download_button('Download strength predictions', df.to_excel(sep = ';',index=False,decimal=','), file_name = file_name + ".csv")
+            st.download_button('Download strength predictions', df.to_csv(sep = ';',index=False,decimal=','), file_name = file_name + ".csv")
         except:
             st.error('There are missing columns')
     return
