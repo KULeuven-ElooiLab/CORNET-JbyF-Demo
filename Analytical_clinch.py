@@ -153,7 +153,7 @@ def show_page():
                 st.metric('',ST_frac)   
     else:
         # read the uploaded file
-        df = pd.read_excel(io=uploadedFile.name) # it is important that the titles in the excel are indentical to those used in def 'getForce'
+        df = pd.read_excel(uploadedFile) # it is important that the titles in the excel are indentical to those used in def 'getForce'
         # display the database
         st.dataframe(df)
         try:
