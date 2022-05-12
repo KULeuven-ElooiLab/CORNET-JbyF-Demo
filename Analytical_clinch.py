@@ -64,35 +64,37 @@ def show_page():
     # _______________Side bar_______________
     input_methode = st.sidebar.selectbox('Select input methode', ['Manual','Excel'])
     if 'Manual' == input_methode:
-        # _______________Variables displayed on the sidebar_______________
+        with st.sidebar.form('input for the formulas'):
+            # _______________Variables displayed on the sidebar_______________
 
-        #-- Set neck thickness 
-        values['neck_thickness']=[st.sidebar.number_input('What is the neck thickness [mm]', value = 0.375)]
-        #-- Set inner diameter clinch 
-        values['inner_diameter']=[st.sidebar.number_input('What is the inner diameter of the clinch [mm]', value = 5.84)]
-        #-- Set max radius disc
-        values['radius_disc']=[st.sidebar.number_input('What is the max radius of the disc [mm]', value = 7.77)]
-        #-- Set max wall thickness 
-        values['wall_thickness']=[st.sidebar.number_input('What is the max wall thickness [mm]', value = 0.883)]
-        #-- Set ultimate tensile stress  
-        values['UTS']=[st.sidebar.number_input('What is the UTS of the top sheet [MPa]', value = 260)]
-        #-- Set average yield stress tube 
-        values['yield_tube']=[st.sidebar.number_input('What is the average yield stress in the tube part [MPa]', value = 370.18)]
-        #-- Set average yield stress disc 
-        values['yield_disc']=[st.sidebar.number_input('What is the average yield stress in the disc part [MPa]', value = 237.07)]
-        #-- Set average yield stress tube (Chan-Joo lee) 
-        values['AFS']=[st.sidebar.number_input('What is the average yield stress in the extended tube part (AFS) [MPa] ', value = 369.8)]
-        #-- Set average coulomb friction
-        values['coulomb']=[st.sidebar.number_input('What is the average coulomb friction [-]', value = 0.1)]
-        #-- Set angle of interlock
-        values['angle']=[st.sidebar.number_input('What is the angle of the interlock [°]', value = 16.79)]
-        #-- Set thickness of top sheet
-        values['t1']=[st.sidebar.number_input('What is the thickness of the top sheet [mm]', value = 1.7)]
-        #-- Set interlock
-        values['interlock']=[st.sidebar.number_input('What is the interlock of the joint [mm]', value = 0.224)]
-        #-- Set minimum bottom thickness of top sheet
-        values['bottom_thickness']=[st.sidebar.number_input('What is the minimum bottom thickness of the top sheet [mm]', value = 0.379)]
-        
+            #-- Set neck thickness 
+            values['neck_thickness']=[st.number_input('What is the neck thickness [mm]', value = 0.375)]
+            #-- Set inner diameter clinch 
+            values['inner_diameter']=[st.number_input('What is the inner diameter of the clinch [mm]', value = 5.84)]
+            #-- Set max radius disc
+            values['radius_disc']=[st.number_input('What is the max radius of the disc [mm]', value = 7.77)]
+            #-- Set max wall thickness 
+            values['wall_thickness']=[st.number_input('What is the max wall thickness [mm]', value = 0.883)]
+            #-- Set ultimate tensile stress  
+            values['UTS']=[st.number_input('What is the UTS of the top sheet [MPa]', value = 260)]
+            #-- Set average yield stress tube 
+            values['yield_tube']=[st.number_input('What is the average yield stress in the tube part [MPa]', value = 370.18)]
+            #-- Set average yield stress disc 
+            values['yield_disc']=[st.number_input('What is the average yield stress in the disc part [MPa]', value = 237.07)]
+            #-- Set average yield stress tube (Chan-Joo lee) 
+            values['AFS']=[st.number_input('What is the average yield stress in the extended tube part (AFS) [MPa] ', value = 369.8)]
+            #-- Set average coulomb friction
+            values['coulomb']=[st.number_input('What is the average coulomb friction [-]', value = 0.1)]
+            #-- Set angle of interlock
+            values['angle']=[st.number_input('What is the angle of the interlock [°]', value = 16.79)]
+            #-- Set thickness of top sheet
+            values['t1']=[st.number_input('What is the thickness of the top sheet [mm]', value = 1.7)]
+            #-- Set interlock
+            values['interlock']=[st.number_input('What is the interlock of the joint [mm]', value = 0.224)]
+            #-- Set minimum bottom thickness of top sheet
+            values['bottom_thickness']=[st.number_input('What is the minimum bottom thickness of the top sheet [mm]', value = 0.379)]
+            
+            st.form_submit_button('apply changes')
     else:
         # Download the template based on the value dictionary
         st.sidebar.download_button("Download template", pd.DataFrame([values.keys()]).to_csv(sep = ';',header = False ,index=False), file_name="template.csv")
