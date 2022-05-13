@@ -71,7 +71,7 @@ def feature_DoE():
     column = 0
     samp = int(st.sidebar.number_input('How many samples do you want to pick?',min_value=1))
     x = lhs(len(keywords),samples=samp,criterion="center")
-    print(x)
+    
 
     # Define the interval of each variable
     for key in keywords:
@@ -98,7 +98,7 @@ def feature_DoE():
 
         # list with name, discreet/continu, interval
         list_var.append(list_temp)
-    st.write(list_var)
+   
     # display the charters for 2 values
     try:
         # display the fundamental charter of LHS
@@ -119,7 +119,7 @@ def feature_DoE():
         axs[1].scatter(x[:,0],x[:,1])
         axs[1].set_xlabel(list_var[0][0])
         axs[1].set_ylabel(list_var[1][0])
-        # print(list_var[0][2])
+        
         if list_var[0][1]== "discreet":
             axs[1].xaxis.set_major_locator(FixedLocator(list_var[0][2]))
             plt.setp(axs[1].get_xticklabels(), rotation=45, horizontalalignment='right')
