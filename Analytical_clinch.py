@@ -154,7 +154,7 @@ def show_page():
                 st.metric('',ST_def)
                 st.metric('',ST_frac)   
     else:
-        try:
+#         try:
             # read the uploaded file
             df = pd.read_excel(uploadedFile) # it is important that the titles in the excel are indentical to those used in def 'getForce'
             # display the database
@@ -172,6 +172,6 @@ def show_page():
             file_name = st.text_input('Name the file', "Strength_predictions")
             # Make it posible to download the results as csv file
             st.download_button('Download strength predictions', df.to_csv(sep = ';',index=False,decimal=','), file_name = file_name + ".csv")
-        except:
-            st.error('There are missing columns')
+#         except:
+#             st.error('There are missing columns')
     return
