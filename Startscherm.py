@@ -1,6 +1,8 @@
 from st_clickable_images import clickable_images
 import base64
 import streamlit as st
+from PIL import Image
+
 
 def show_page():
     
@@ -15,9 +17,8 @@ def show_page():
         images,
         titles=['doel','sterkte','workflow'],
         div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
-        img_style={ "width":"30%"},
+        img_style={ "width":"33%",'border':'1px'},
     )
-    
     return clicked
     
     
