@@ -143,7 +143,7 @@ def show_page():
 
             # st.image(image, width = 600)
             
-            st.image(Image.open('docs/Parameters1.png'),caption= 'basis parameters van de cross section analysis',width=600)
+            st.image(Image.open('docs/Parameters1.png'),caption= 'basis parameters van de cross section analysis')
             st.image(Image.open('docs/Parameters2.png'))
         with st.expander("Discription of the formulas"):
             
