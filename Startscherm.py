@@ -1,7 +1,7 @@
 from st_clickable_images import clickable_images
 import base64
 import streamlit as st
-from PIL import Image
+
 
 
 def show_page():

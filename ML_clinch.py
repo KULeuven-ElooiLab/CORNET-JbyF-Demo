@@ -125,22 +125,26 @@ def show_page():
     # __________________________________________Main screen of the application__________________________________________
 
     # Title the app
-    st.markdown('### Strength prognosis of a clinch joint based on machine learning')
+    emptycol1,col,emptycol2 =st.columns([1,6,1])
+    with col:
+        st.markdown('### Strength prognosis of a clinch joint based on machine learning')
 
-    st.markdown("""
-    * Use the menu at left to fill in the input parameters
-    * The dimensions will be illustrated on the figure below
-    * Once you change a parameter, the strength will automatically be recalculated
-    """)
+        st.markdown("""
+        * Use the menu at left to fill in the input parameters
+        * The dimensions will be illustrated on the figure below
+        * Once you change a parameter, the strength will automatically be recalculated
+        """)
 
 
     # ----------------Make the prediction---------------------
 
-    col1, col2 = st.columns(2)
+    emptycol1,col1, col2,emptycol2 = st.columns([1,3,3,1])
     with col1:
-        st.metric('Max top tensile strenth',"{:0.2f} kN".format(predict_strength("TT")))
+        st.write('### Max top tensile strenth')
+        st.metric('',"{:0.2f} kN".format(predict_strength("TT")))
     with col2:
-        st.metric('Max shear strength',"{:0.2f} kN".format(predict_strength("ST")))
+        st.write('### Max shear strength')
+        st.metric('',"{:0.2f} kN".format(predict_strength("ST")))
 
 
     # ----------------Display the image---------------------
@@ -188,6 +192,8 @@ def show_page():
 
 
     #-- Display the image in Streamlit webApp
-    st.image(image)
+    emptycol1,col,emptycol2 =st.columns([1,2.2,1])
+    with col:
+        st.image(image)
 
     return

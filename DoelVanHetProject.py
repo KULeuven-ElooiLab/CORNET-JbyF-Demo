@@ -18,7 +18,9 @@ def show_page():
     )
     
     # informative text
-    text.intro()
+    emptycol1, col,emptycol2 = st.columns([1,6,1])
+    with col:
+        text.intro()
 
     # go back to 'startscherm' when Home is selected
     if menu_id == "Home":

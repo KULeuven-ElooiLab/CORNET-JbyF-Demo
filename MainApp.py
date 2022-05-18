@@ -67,8 +67,8 @@ def footer():
         link("https://www.mtm.kuleuven.be/english/research/elooi", image('https://www.kuleuven.be/internationaal/thinktank/fotos-en-logos/ku-leuven-logo.png',
         height=px(40), marginLeft= "10px")),
         
-        image('https://repairshare.be/wp-content/uploads/2022/01/vlaiologo.png',
-        	 height=px(40), marginLeft= "20px"),
+        link("https://www.vlaio.be/nl",image('https://repairshare.be/wp-content/uploads/2022/01/vlaiologo.png',
+        	 height=px(40), marginLeft= "20px")),
         
     ]
     layout(*myargs)

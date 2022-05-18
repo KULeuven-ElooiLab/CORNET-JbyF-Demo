@@ -11,12 +11,28 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image,ImageDraw,ImageOps
+from st_clickable_images import clickable_images
+import base64
 
 
 #-- Make a dictionary of all variables
 values = {'neck_thickness':[],'inner_diameter':[],'radius_disc': [],'wall_thickness': [],'yield_tube': [],
     'yield_disc': [],'coulomb': [],'angle': [],'UTS':[],'t1':[],'interlock':[],'bottom_thickness':[],'AFS':[]
     }
+def centerImage(pathImage,width,underscript):
+    images = []
+    
+    with open(pathImage, "rb") as image:
+            encoded = base64.b64encode(image.read()).decode()
+            images.append(f"data:image/jpeg;base64,{encoded}")
+    clicked = clickable_images(
+                images,
+                div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
+                img_style={'width':f'{width}'},
+            )
+    if underscript!='':
+        st.markdown(f"<p style='text-align: center; color: grey;'>{underscript}</p>", unsafe_allow_html=True)
+    return clicked
 
 def getForce(v,variant):
         list_strength = []
@@ -111,6 +127,23 @@ def show_page():
         # -- print a discription of the formulas
         text.analytical_General()
 
+        
+
+            
+        text.analytical_howItWorks()
+        
+        with st.expander("Discription of the calculation parameter"):
+            centerImage(pathImage='docs/Parameter1.jpg',width='70%',
+            underscript='Basic parameters that can be measured during a cross section analysis')
+            centerImage(pathImage='docs/Parameters2.png',width='100%',
+            underscript='These are the average stresses taken from the FE-software. Left: Simplification based on tube drawing process. Right: Combination of tube and rod drawing ')
+            
+
+        with st.expander("Discription of the formulas"):
+            
+            text.analytical_TT()
+            text.analytical_ST()
+        st.write('### Results')
         if 'Manual' == input_methode:
             
             
@@ -133,23 +166,7 @@ def show_page():
             else:
                 ST = ST_frac
                 modeST = "fracture"
-
-            
-        text.analytical_howItWorks()
-        
-        with st.expander("Discription of the calculation parameter"):
-            
-
-
-            # st.image(image, width = 600)
-            
-            st.image(Image.open('docs/Parameters1.png'),caption= 'basis parameters van de cross section analysis')
-            st.image(Image.open('docs/Parameters2.png'))
-        with st.expander("Discription of the formulas"):
-            
-            text.analytical_TT()
-            text.analytical_ST()
-        text.results(TT, modeTT, ST, modeST)
+            text.results(TT, modeTT, ST, modeST)
     # -- Based on the selectbox, the strength will be calculated for 1 or multiple joints 
         if 'Excel' == input_methode:
             try:
@@ -162,16 +179,20 @@ def show_page():
                 for i in df:
                     val[i]=list(df[i].to_numpy())
                     print(val.keys())
-                # add the results to the dataframe
-                df['TT_def']=getForce(val,'TT_def')
-                df['TT_frac']=getForce(val,'TT_frac')
-                df['ST_def']=getForce(val,'ST_def')
-                df['ST_frac']=getForce(val,'ST_frac')
-                file_name = st.text_input('Name the file', "Strength_predictions")
-                # Make it posible to download the results as csv file
-                st.download_button('Download strength predictions', df.to_csv(sep = ';',index=False,decimal=','), file_name = file_name + ".csv")
+                try:
+                    # add the results to the dataframe
+                    df['TT_def']=getForce(val,'TT_def')
+                    df['TT_frac']=getForce(val,'TT_frac')
+                    df['ST_def']=getForce(val,'ST_def')
+                    df['ST_frac']=getForce(val,'ST_frac')
+                    file_name = st.text_input('Name the file', "Strength_predictions")
+                    # Make it posible to download the results as csv file
+                    st.download_button('Download strength predictions', df.to_csv(sep = ';',index=False,decimal=','), file_name = file_name + ".csv")
+                except:
+                    st.error('The column names are not correct or there is data missing.')
             except:
-                st.error('There are missing columns')
+                st.warning('You must first upload a file at the sidebar on the left.')
+            
         
     if 'Manual' == input_methode:  
         # with st.expander("see all results"):

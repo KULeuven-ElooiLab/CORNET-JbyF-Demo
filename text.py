@@ -1,8 +1,23 @@
 import streamlit as st
-from PIL import Image
 from io import BytesIO
 import matplotlib.pyplot as plt
+from st_clickable_images import clickable_images
+import base64
 
+def centerImage(pathImage,width,underscript):
+    images = []
+    
+    with open(pathImage, "rb") as image:
+            encoded = base64.b64encode(image.read()).decode()
+            images.append(f"data:image/jpeg;base64,{encoded}")
+    clicked = clickable_images(
+                images,
+                div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
+                img_style={'width':f'{width}'},
+            )
+    if underscript!='':
+        st.markdown(f"<p style='text-align: center; color: grey;'>{underscript}</p>", unsafe_allow_html=True)
+    return clicked
 
 def render_latex(formula, fontsize=12, dpi=600 ):
     """Renders LaTeX formula into Streamlit."""
@@ -39,7 +54,9 @@ def intro():
     joining technologies, these development cycles and thereby the effort for implementation into production must be reduced.
     """)
 
-    st.image(Image.open('docs/IntroPic.png'))
+    centerImage(pathImage='docs/IntroPic.png',width='70%',
+            underscript='Basic parameters that can be measured during a cross section analysis')
+    
 
     st.markdown("### Data-based algorithms")
     
@@ -69,8 +86,8 @@ def analytical_General():
 def analytical_howItWorks():
     st.write('''
     ### How it works
-    On the left you have a sidebar that where all parameters are located that are needed for the calculations. You can fill those in for one particular case. Or, in case you want to predict the strength for multiple cases, there is also a tool where you upload your excel file. You can download the template below. And reuploaded it with your data.
-    In order to understand the parameters, a small description can be found below:
+    On the left you have a sidebar that where all parameters are located that are needed for the calculations. You can fill those in for one particular case. Or, in case you want to predict the strength for multiple cases, there is also a tool where you upload your excel file with all the data. You can download the template in the sidebar on the left. And reuploaded it with your data.
+    \n In order to understand the parameters, a small description can be found below:
     ''')
 
 def analytical_TT():
@@ -90,7 +107,7 @@ def analytical_TT():
     
     render_latex(r"F_{def} = {A_n\left[-\frac{4\pi}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\omega}\right)+\left(\frac{A^{Rod}_{exit}\sigma^{Rod}_{yield}\left(\frac{1+\beta}{\beta}\right)\left[1-\left(\frac{A^{Rod}_{exit}}{A^{Rod}_{entry}}\right)^{\beta}\right]}{A^{Tube}_{entry}}+\frac{4\pi}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\omega}\right)\right)\left(\frac{A^{Tube}_{entry}}{A_n}\right)^{\frac{\omega}{2\pi}}\right]}")
 
-
+    render_latex(r"F_{def} = {A_n\left[\frac{2}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\beta}\right)+\left(\frac{A^{Rod}_{exit}\sigma^{Rod}_{yield}\left(\frac{1+\beta}{\beta}\right)\left[1-\left(\frac{A^{Rod}_{exit}}{A^{Rod}_{entry}}\right)^{\beta}\right]}{A^{Tube}_{entry}}-\frac{2}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\beta}\right)\right)\left(\frac{A_n}{A^{Tube}_{entry}}\right)^{\beta}\right]}")
     st.write('''
     The top sheet is the thinnest in the neck region. Which means that the joint will fracture in this region. This failure mode can be compared to an 
     unixali tensile test on a tube specimen with a thickness equal to the neck thickness. This calculation is full analytical when the area is calculated with experimental data.
@@ -111,7 +128,6 @@ def analytical_ST():
     
 def results(strengthTT,modeTT,strengthST,modeST):
     st.write(f'''
-    ### Results
     Based on the manual input would we expect the joint to fail around **{strengthTT} during top tensile load** where {modeTT} failure is dominant. 
     During a **shear load** we predict that the joint can withstand **{strengthST}** with {modeST} as dominant failure.
     \n The results of all 4 calculations can be seen in the table below: 

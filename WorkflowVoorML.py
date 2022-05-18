@@ -20,16 +20,34 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import r2_score, make_scorer
 from PIL import Image
 import pickle
-import logging
+from st_clickable_images import clickable_images
+import base64
+
+def centerImage(pathImage,width,underscript):
+    images = []
+    
+    with open(pathImage, "rb") as image:
+            encoded = base64.b64encode(image.read()).decode()
+            images.append(f"data:image/jpeg;base64,{encoded}")
+    clicked = clickable_images(
+                images,
+                div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
+                img_style={'width':f'{width}'},
+            )
+    if underscript!='':
+        st.markdown(f"<p style='text-align: center; color: grey;'>{underscript}</p>", unsafe_allow_html=True)
+    return clicked
 
 
 def experimenten():
     st.markdown('## Experimental setup')
-    st.image(Image.open('docs/Exp_setup.png'))
+    centerImage(pathImage='docs/Exp_setup.png',width='70%',
+            underscript='')
 
 def simulerenExperimenten():
     st.markdown('## Deviation between the numerical and experimental data of the 50 best simulations')
-    st.image(Image.open('docs/Simuleren_results.png'))
+    centerImage(pathImage='docs/Simuleren_results.png',width='70%',
+            underscript='')
 
 def DoE():
     st.markdown('DoE')
@@ -535,24 +553,25 @@ def show_page():
         sticky_nav=True, #at the top or not
         sticky_mode='sticky', #jumpy or not-jumpy, but sticky or pinned
             )
-    
+    emptycol1,col1,emptycol2 = st.columns([1,6,1])
+    with col1:
     # start a def based on the selected tab in the navigationbar
-    if menu_id == "Experimenten":
-            experimenten()
-    if menu_id == "Simuleren":
-        simulerenExperimenten()
-    if menu_id == "Design of Experiment (DoE)":
-            DoE()
-    if menu_id == "Opbouwen database":
-            OpbouwDatabase()
-    if menu_id == "Machine Learning (ML)":
-            ML()
-    if menu_id == "DoE":
-            feature_DoE()
-    if menu_id == "ML-Training":
-        feature_ML_Train()
-    if menu_id == "ML-Predicting":
-        feature_ML_Predict()
-    if menu_id == "Home":
-        return 3
+        if menu_id == "Experimenten":
+                experimenten()
+        if menu_id == "Simuleren":
+            simulerenExperimenten()
+        if menu_id == "Design of Experiment (DoE)":
+                DoE()
+        if menu_id == "Opbouwen database":
+                OpbouwDatabase()
+        if menu_id == "Machine Learning (ML)":
+                ML()
+        if menu_id == "DoE":
+                feature_DoE()
+        if menu_id == "ML-Training":
+            feature_ML_Train()
+        if menu_id == "ML-Predicting":
+            feature_ML_Predict()
+        if menu_id == "Home":
+            return 3
     return 2
