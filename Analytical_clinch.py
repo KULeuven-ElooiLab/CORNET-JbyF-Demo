@@ -138,11 +138,7 @@ def show_page():
         text.analytical_howItWorks()
         
         with st.expander("Discription of the calculation parameter"):
-            with open("style.css") as f:
-                st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
-
-            path = "docs/Parameters1.png"
-            image = Image.open(path)
+            
 
 
             # st.image(image, width = 600)
