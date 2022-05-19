@@ -568,10 +568,11 @@ def show_page():
                 ML()
         if menu_id == "DoE":
                 feature_DoE()
-        if menu_id == "ML-Training":
-            feature_ML_Train()
         if menu_id == "ML-Predicting":
             feature_ML_Predict()
-        if menu_id == "Home":
+    if menu_id == "ML-Training":
+            feature_ML_Train()
+    
+    if menu_id == "Home":
             return 3
     return 2

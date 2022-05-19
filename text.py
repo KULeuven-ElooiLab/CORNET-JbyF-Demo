@@ -78,7 +78,13 @@ def analytical_General():
     Based on several parameters is it possible to predict the force of the joint. These calculations are divided into 2 groups of failure. 
     Viz, deformation and fracture dominant failure. In the literature, various equations have been found for both the pull-out and the shear 
     tensile tests. Based on 50 cases, we defined the best performing equations. 
-    \n Those 4 equations are used in this web application. 
+    ''')
+
+    centerImage(pathImage='docs/Analytical.jpg',width='80%',
+            underscript='')
+
+    st.write('''
+    Those 4 equations are used in this web application. 
     To know the strength of the joint in a particular loading condition, you need to calculated the strength of both failure modes. 
     The lowest calculated strength will be the strength of the joint in that condition. 
     ''')
@@ -86,8 +92,12 @@ def analytical_General():
 def analytical_howItWorks():
     st.write('''
     ### How it works
-    On the left you have a sidebar that where all parameters are located that are needed for the calculations. You can fill those in for one particular case. Or, in case you want to predict the strength for multiple cases, there is also a tool where you upload your excel file with all the data. You can download the template in the sidebar on the left. And reuploaded it with your data.
-    \n In order to understand the parameters, a small description can be found below:
+    On the left, you have the sidebar with all parameters needed for the calculations. 
+    You can fill those in for one particular case. Or, in case you want to predict the strength 
+    of multiple joints at once, there is also a tool where you upload your excel file with all the data. 
+    You can download the template in the sidebar and re-upload it with your data.
+    \n In order to understand the parameters, a small description can be found below. 
+    Also, the discription of the formulas:
     ''')
 
 def analytical_TT():
@@ -96,41 +106,52 @@ def analytical_TT():
     st.write('''
     #### Top tensile test
     The deformation process during a top tensile test can be compared with that of the **tube sinking process without a mandrel**. This implies 
-    that the die-side sheet can be seen as a rigid ‘die’. The most basic formula is when the clinch is simplified to a tube. Because of 
+    that the die-side sheet can be seen as a rigid ‘die’. The most basic formula applies when the clinch is simplified to a tube. Because of 
     oversimplification, the maximum force will be underestimated. According to Coppieters et al. [[1]](https://www.sciencedirect.com/science/article/pii/S0263823111002679?casa_token=B9vJYddxRZwAAAAA:5qLzJcUV4gLqi2gJPE3CC38byUndCJ8UfmIoVFduI26Dy3b0XCoLJw55gXLHm4FdiM2AsEBYMekKXg), 
-    the bottom part contributes to the strength as it radially compressed when assuming a rigid die (original). If the edges of the shape are more strictly delineated, 
-    by means of the typical geometric parameters, then even better prediction of the force is obtained.
-    > *The maximum top tensile force of **deformation-dominated failure** is calculated accordingly:*
+    the bottom part of the clinch contributes to the strength as it is radially compressed when assuming a rigid die (original). If the edges of the shape are more strictly delineated, 
+    by means of the typical geometric parameters, an even better prediction of the force is obtained.
+    > *The maximum top tensile force of **deformation-dominant failure** is calculated according to Coppieters (see below). But with different boundary conditions.*
     ''')
 
     
     
     render_latex(r"F_{def} = {A_n\left[-\frac{4\pi}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\omega}\right)+\left(\frac{A^{Rod}_{exit}\sigma^{Rod}_{yield}\left(\frac{1+\beta}{\beta}\right)\left[1-\left(\frac{A^{Rod}_{exit}}{A^{Rod}_{entry}}\right)^{\beta}\right]}{A^{Tube}_{entry}}+\frac{4\pi}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\omega}\right)\right)\left(\frac{A^{Tube}_{entry}}{A_n}\right)^{\frac{\omega}{2\pi}}\right]}")
 
-    render_latex(r"F_{def} = {A_n\left[\frac{2}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\beta}\right)+\left(\frac{A^{Rod}_{exit}\sigma^{Rod}_{yield}\left(\frac{1+\beta}{\beta}\right)\left[1-\left(\frac{A^{Rod}_{exit}}{A^{Rod}_{entry}}\right)^{\beta}\right]}{A^{Tube}_{entry}}-\frac{2}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\beta}\right)\right)\left(\frac{A_n}{A^{Tube}_{entry}}\right)^{\beta}\right]}")
+    # render_latex(r"F_{def} = {A_{n,tube}\left[\frac{2}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\beta}\right)+\left(\frac{A^{Rod}_{exit}\sigma^{Rod}_{yield}\left(\frac{1+\beta}{\beta}\right)\left[1-\left(\frac{A^{Rod}_{exit}}{A_f}\right)^{\beta}\right]}{A^{Tube}_{entry}}-\frac{2}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\beta}\right)\right)\left(\frac{A_{n,tube}}{A^{Tube}_{entry}}\right)^{\beta}\right]}")
     st.write('''
-    The top sheet is the thinnest in the neck region. Which means that the joint will fracture in this region. This failure mode can be compared to an 
-    unixali tensile test on a tube specimen with a thickness equal to the neck thickness. This calculation is full analytical when the area is calculated with experimental data.
-    > *The **fracture strength** can be calculated as followed:*
+    The top sheet is the thinnest in the neck region meaning that the joint will fracture in this region. This failure mode can be compared to an 
+    uniaxial tensile test on a tubular specimen with a thickness equal to the neck thickness [[2]](https://www.sciencedirect.com/science/article/pii/S0261306909006220). This calculation is fully analytical when the area is derived from experimental data.
+    > *The **fracture strength** can be calculated as follows:*
     ''')
     render_latex(r'''F_{frac} = A_n\sigma_{UTS}''')
     
 def analytical_ST():
     st.write('''
     #### Shear lap tensile test
-    When applying a shear load on 2 clinched sheets, a complex deformation of the joint and sheets will occur. The most simplified 
-    representation is a tube under shearload. Due to the large deformation of the sheets during clinching, the yield stress has increased.
-    Therefore, numerical data is needed to retrieve the yield stress after joining (AFS)''')
+    When applying a shear load on two clinched sheets, a complex deformation of the joint and sheets will occur. The most simplified 
+    representation is a tube under shear loading. Due to the large deformation and associated strain hardening of the sheets during clinching, the local yield stress has increased.
+    Therefore, numerical data is needed to determine the yield stress after joining (AFS)''')
     render_latex(r'''F_{def} = A_n\frac{\sigma_{AFS}}{\sqrt{3}}''')
     st.write('''
-    Jaspart introduced an emperical method to calcutate the strength until fracture. 
+    An empirical method was used to calculate the strength until fracture. 
     ''')
+    render_latex(r'''F_{frac} = \frac{t_1\alpha}{4}(2d+\alpha t_1)\pi\sigma_{UTS} \quad with: \quad \alpha=0.4''')
     
 def results(strengthTT,modeTT,strengthST,modeST):
     st.write(f'''
-    Based on the manual input would we expect the joint to fail around **{strengthTT} during top tensile load** where {modeTT} failure is dominant. 
-    During a **shear load** we predict that the joint can withstand **{strengthST}** with {modeST} as dominant failure.
+    Based on the manual input, we expect the joint to fail around **{strengthTT} during a top tensile test**. Where {modeTT} failure is dominant. 
+    During **a shear lap test**, we predict that the joint can withstand **{strengthST}** with {modeST} as dominant failure mode.
     \n The results of all 4 calculations can be seen in the table below: 
     ''')
+
+def  Machine_General():
+    st.write('''
+    ### General
+     
+    ''')
+
+    centerImage(pathImage='docs/ML1.jpg',width='65%',
+            underscript='')
+
     
     

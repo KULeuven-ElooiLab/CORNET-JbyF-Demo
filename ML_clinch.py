@@ -2,9 +2,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from PIL import Image,ImageDraw,ImageOps
+from PIL import Image,ImageDraw,ImageFont
 import pickle
 import requests, os
+import text
 
 
 from copy import deepcopy
@@ -47,79 +48,80 @@ def show_page():
     
 
     # __________________________________________Menu on the left__________________________________________
+    with st.sidebar.form('input for ML'):
+        # ----------------Material properties---------------------
+        st.markdown("# Select the material properties")
+        
 
-    # ----------------Material properties---------------------
-    st.sidebar.markdown("# Select the material properties")
+        #           ***   Top sheet properties   ***
+        st.markdown("### Properties for top sheet")
 
-    #           ***   Top sheet properties   ***
-    st.sidebar.markdown("### Properties for top sheet")
+        #-- Set Steel or Aluminum 
+        if st.selectbox('Select the material:',['Steel', 'Aluminium'])=="Steel":
+            # trained model can not handle strings
+            material_top = 1
+        else:
+            material_top = 2
+        #-- Set tensile strength                                    
+        strength_top = st.number_input('What is the tensile strength of the material [MPa]', value = 264.0982459)
+        #-- Set sheet thickness
+        sheet_thickness1 = st.slider('Set the sheet thickness [mm]', 0.0, 2.0, 1.7)
 
-    #-- Set Steel or Aluminum 
-    if st.sidebar.selectbox('Select the material:',['Steel', 'Aluminium'])=="Steel":
-        # trained model can not handle strings
-        material_top = 1
-    else:
-        material_top = 2
-    #-- Set tensile strength                                    
-    strength_top = st.sidebar.number_input('What is the tensile strength of the material [MPa]', value = 264.0982459)
-    #-- Set sheet thickness
-    sheet_thickness1 = st.sidebar.slider('Set the sheet thickness [mm]', 0.0, 2.0, 1.7)
+        #           ***   Buttom sheet properties   ***
+        st.markdown("### Properties for bottom sheet")
 
-    #           ***   Buttom sheet properties   ***
-    st.sidebar.markdown("### Properties for bottom sheet")
-
-    #-- Set Steel or Aluminum
-    if st.sidebar.selectbox('Select the material:',['Aluminium','Steel'])=="Steel":
-        # trained model can not handle strings
-        material_bottom = 1
-    else:
-        material_bottom = 2
-    #-- Set tensile strength                                    
-    strength_bottom = st.sidebar.number_input('What is the tensile strength of the material [MPa] ', value = 277.1778877)
-    #-- Set sheet thickness
-    sheet_thickness2 = st.sidebar.slider('Set the sheet thickness [mm] ', 0.0, 2.0, 1.5)
-
-
-    # ----------------Material properties---------------------
-    st.sidebar.markdown("# Determine the tool geometrie")
-
-    #           ***   Die properties   ***
-    st.sidebar.markdown("### Dimensions of the die")
-
-    #-- Set die depth
-    die_depth = st.sidebar.slider('Set the depth of the die [mm]', 0.0, 10.0, 1.4)
-    #-- Set anvil diameter
-    diameter_anvil = st.sidebar.slider('Set the diameter of the anvil [mm]', 0.0, 7.0, 4.9)
-    #-- Set wall angle β
-    die_angle_wall = st.sidebar.slider('Set the angle of the wall [°]', 0.0, 10.0, 5.0)
-    #-- Set anvil angle δ
-    die_angle_anvil = st.sidebar.slider('Set the angle between the anvil and the groove [°]', 0.0, 60.0, 21.8)
-
-    #           ***   Punch properties   ***
-    st.sidebar.markdown("### Dimensions of the punch")
-
-    #-- Set angle
-    punch_angle_wall = st.sidebar.slider('Set the angle of the wall [°] ', 0.0, 10.0, 2.5)
-    #-- Set die depth
-    punch_diameter = st.sidebar.slider('Set the diameter of punch [mm]', 0.0, 7.0, 5.0)
+        #-- Set Steel or Aluminum
+        if st.selectbox('Select the material:',['Aluminium','Steel'])=="Steel":
+            # trained model can not handle strings
+            material_bottom = 1
+        else:
+            material_bottom = 2
+        #-- Set tensile strength                                    
+        strength_bottom = st.number_input('What is the tensile strength of the material [MPa] ', value = 277.1778877)
+        #-- Set sheet thickness
+        sheet_thickness2 = st.slider('Set the sheet thickness [mm] ', 0.0, 2.0, 1.5)
 
 
-    # ----------------Joining results---------------------
-    st.sidebar.markdown("# Fill in the joining results")
+        # ----------------Material properties---------------------
+        st.markdown("# Determine the tool geometrie")
 
-    #-- Set interlock 
-    interlock = st.sidebar.number_input('What is the interlock [mm]', value = 0.38)
-    #-- Set neck thickness 
-    neck_thickness = st.sidebar.number_input('What is the neck thickness [mm]', value = 0.387)
-    #-- Set bottom thickness 
-    bottom_thickness = st.sidebar.number_input('What is the bottom thickness [mm]', value = 0.673)
-    #-- Set min bottom thickness top sheet 
-    min_topThickness = st.sidebar.number_input('What is the min bottom thickness top sheet [mm]', value = 0.43)
-    #-- Set min bottom thickness bottom sheet 
-    min_bottomThickness = st.sidebar.number_input('What is the min bottom thickness bottom sheet [mm]', value = 0.193)
-    #-- Set joining force
-    joining_force = st.sidebar.number_input('What is the max joining force [kN]', value = 54)
+        #           ***   Die properties   ***
+        st.markdown("### Dimensions of the die")
 
+        #-- Set die depth
+        die_depth = st.slider('Set the depth of the die [mm]', 0.0, 10.0, 1.4)
+        #-- Set anvil diameter
+        diameter_anvil = st.slider('Set the diameter of the anvil [mm]', 0.0, 7.0, 4.9)
+        #-- Set wall angle β
+        die_angle_wall = st.slider('Set the angle of the wall [°]', 0.0, 10.0, 5.0)
+        #-- Set anvil angle δ
+        die_angle_anvil = st.slider('Set the angle between the anvil and the groove [°]', 0.0, 60.0, 21.8)
+
+        #           ***   Punch properties   ***
+        st.markdown("### Dimensions of the punch")
+
+        #-- Set angle
+        punch_angle_wall = st.slider('Set the angle of the wall [°] ', 0.0, 10.0, 2.5)
+        #-- Set die depth
+        punch_diameter = st.slider('Set the diameter of punch [mm]', 0.0, 7.0, 5.0)
+
+
+        # ----------------Joining results---------------------
+        st.markdown("# Fill in the joining results")
+
+        #-- Set interlock 
+        interlock = st.number_input('What is the interlock [mm]', value = 0.38)
+        #-- Set neck thickness 
+        neck_thickness = st.number_input('What is the neck thickness [mm]', value = 0.387)
+        #-- Set bottom thickness 
+        bottom_thickness = st.number_input('What is the bottom thickness [mm]', value = 0.673)
+        #-- Set min bottom thickness top sheet 
+        min_topThickness = st.number_input('What is the min bottom thickness top sheet [mm]', value = 0.43)
+        #-- Set min bottom thickness bottom sheet 
+        min_bottomThickness = st.number_input('What is the min bottom thickness bottom sheet [mm]', value = 0.193)
+        #-- Set joining force
+        joining_force = st.number_input('What is the max joining force [kN]', value = 54)
+        st.form_submit_button('apply changes')
 
 
     # __________________________________________Main screen of the application__________________________________________
@@ -127,8 +129,9 @@ def show_page():
     # Title the app
     emptycol1,col,emptycol2 =st.columns([1,6,1])
     with col:
-        st.markdown('### Strength prognosis of a clinch joint based on machine learning')
+        st.markdown('## Strength prognosis based on machine learning')
 
+        text.Machine_General()
         st.markdown("""
         * Use the menu at left to fill in the input parameters
         * The dimensions will be illustrated on the figure below
@@ -159,7 +162,8 @@ def show_page():
     #-- Write each parameter on the image based on the pixel coordinate
 
     # tickness 1
-    draw.text((0,315), str(sheet_thickness1), colour)
+    font = ImageFont.truetype('docs\Cambria Math.ttf', 20)
+    draw.text((0,315), str(sheet_thickness1), colour,direction='ttb')
     # tickness 2
     draw.text((0,365), str(sheet_thickness2), colour)
     # die depth

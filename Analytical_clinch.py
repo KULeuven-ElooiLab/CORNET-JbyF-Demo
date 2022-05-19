@@ -47,21 +47,22 @@ def getForce(v,variant):
                 ExitRod1 = v['inner_diameter'][i]+2*(v['neck_thickness'][i]+v['interlock'][i]-v['bottom_thickness'][i]*np.tan(np.radians(v['angle'][i])))
             EntryRod1 = v['inner_diameter'][i]+2*(v['neck_thickness'][i]+v['interlock'][i])
             Q = (ExitRod1**2*v['yield_disc'][i]*((1+B)/B)*(1-(ExitRod1/EntryRod1)**(2*B)))/(ExitRod1**2-v['inner_diameter'][i]**2)
+            q = (ExitRod**2*v['yield_disc'][i]*((1+B)/B)*(1-(ExitRod/v['radius_disc'][i])**(2*B)))/(ExitRod**2-v['inner_diameter'][i]**2)
             H = ((4*pi)/np.sqrt(3))*v['yield_tube'][i]*((1+B)/(2*pi-(1+B)))
-            P = ((ExitRod1**2-v['inner_diameter'][i]**2)/((v['inner_diameter'][i]+2*v['neck_thickness'][i])**2-v['inner_diameter'][i]**2))**((2*pi-(1+B))/(2*pi))
-            
+            G = (2/np.sqrt(3))*v['yield_tube'][i]*((1+B)/(B))
+            P = (((v['inner_diameter'][i]+2*v['neck_thickness'][i])**2-v['inner_diameter'][i]**2)/(ExitRod1**2-v['inner_diameter'][i]**2))**B
+            p = (((v['inner_diameter'][i]+2*v['neck_thickness'][i])**2-v['inner_diameter'][i]**2)/(ExitRod**2-v['inner_diameter'][i]**2))**B
+
             if variant == 'TT_def':
                 # if bottom thickness is greater then the interlock height
                 if v['interlock'][i]/np.tan(np.radians(v['angle'][i]))<v['bottom_thickness'][i]:
                     TT_def = (pi/4*ExitRod1**2*v['yield_disc'][i]*((1+B)/B)*(1-(ExitRod1/EntryRod1)**(2*B)))/1000
                 # if bottom thickness is smaller then the interlock height
                 else:
-                    TT_def = A*(-H+(Q+H)*P)/1000
+                    TT_def = A*(G+(Q-G)*P)/1000
                 list_strength.append(TT_def)
             elif variant == 'TT_def_original':
-                TT_def_original =((A*(-(((4*pi)/np.sqrt(3))*v['yield_tube'][i]*((1+B)/(2*pi-(1+B))))+(((ExitRod**2*v['yield_disc'][i]*((1+B)/B)*(1-(ExitRod/v['radius_disc'][i])**(2*B)))
-                /(ExitRod**2-v['inner_diameter'][i]**2))+(((4*pi)/np.sqrt(3))*v['yield_tube'][i]*((1+B)/(2*pi-(1+B)))))*
-                (((v['inner_diameter'][i]+2*v['wall_thickness'][i])**2-v['inner_diameter'][i]**2)/((v['inner_diameter'][i]+2*v['neck_thickness'][i])**2-v['inner_diameter'][i]**2))**((2*pi-(1+B))/(2*pi))))/1000)*0.63
+                TT_def_original = A*(G+(q-G)*p)*0.63/1000
                 list_strength.append(TT_def_original)
             elif variant == 'TT_frac':
                 TT_frac = A * v['UTS'][i]/1000
@@ -151,7 +152,7 @@ def show_page():
             TT_frac = "{:0.2f} kN".format(float(getForce(values,"TT_frac")[0]))
             ST_def = "{:0.2f} kN".format(float(getForce(values,"ST_def")[0]))
             ST_frac = "{:0.2f} kN".format(float(getForce(values,"ST_frac")[0]))
-            TT_def_original = "{:0.2f} kN".format(float(getForce(values,"TT_def_original")[0]))
+            # TT_def_original = "{:0.2f} kN".format(float(getForce(values,"TT_def_original")[0]))
 
             if TT_def<TT_frac:
                 TT = TT_def
@@ -195,7 +196,7 @@ def show_page():
             
         
     if 'Manual' == input_methode:  
-        # with st.expander("see all results"):
+        
             emptycol1,col1, col2,col3,emptycol2 = st.columns([1,2,2,2,1])
             with col1:
                 new_title = '<p style="font-family:sans-serif; color:White; font-size: 30px;">New image</p>'
@@ -207,7 +208,7 @@ def show_page():
                 st.write('### Top tensile')
                 st.metric('',TT_def)
                 st.metric('',TT_frac)
-                st.metric('',TT_def_original)
+                # st.metric('',TT_def_original)
 
             with col3:
                 st.write('### Shear lap')
