@@ -17,7 +17,7 @@ def centerImage(pathImage,width,underscript):
             )
     if underscript!='':
         st.markdown(f"<p style='text-align: center; color: grey;'>{underscript}</p>", unsafe_allow_html=True)
-    return clicked
+    
 
 def render_latex(formula, fontsize=12, dpi=600 ):
     """Renders LaTeX formula into Streamlit."""
@@ -153,5 +153,42 @@ def  Machine_General():
     centerImage(pathImage='docs/ML1.jpg',width='65%',
             underscript='')
 
+def WF_experiments():
+    st.write('''
+    ### General
+    The first step towards the strength prognosis of a clinch joint is collecting experimental data. 
+    This data is then used for the validation of finite element (FE) simulations as well as for the prognosis quality 
+    of data-based algorithm. Based on four materials (three steel and one aluminium grade) with minimum three 
+    different sheet thicknesses, a statistical test plan with 73 material combinations was created for the experimental tests.
+    \n
+    ### Experimental data of the joint
+    \n In order to validate the stress state within the material, the force-displacement curve was measured during 
+    the joining process. To take this into account during machine learning, the maximum setting force was used as an input value.
+    ''')
+
+    centerImage(pathImage='docs/Processcurve.jpg',width='40%',
+            underscript='')
+
+    st.write('''
+    The typical geometrical parameters were also measured via a cross section analysis. These parameters were used for 
+    the validation and as input values for the machine learning. The cross section itself was used to tune the friction 
+    parameters so the joint contour from the simulation  would be identical to the experiment.
+    ''')
     
-    
+    centerImage(pathImage='docs/CrossSection-M.png',width='60%',
+            underscript='')
+
+    st.write('''
+    ### Experimental data of the joint strength
+    \n For the strength, two different loading conditions were tested, pull-out or top tensile test and the shear lap test. 
+    From the process curves, only the maximum force (joint strength) was used in further steps.
+    ''')
+    centerImage(pathImage='docs/StrengthTests.jpg',width='80%',
+            underscript='Two loading conditions used for the determination of the max force. Left: Pull-out Right: Shear lap')
+
+def WF_simulations():
+    st.write('''
+    The simulations are carried out with the help of [Simufact forming](https://www.simufact.com/simufactforming-forming-simulation.html).
+    ''')
+    centerImage(pathImage='docs/Simuleren_results.png',width='70%',
+            underscript='Deviation between the numerical and experimental data of the 50 best simulations')

@@ -162,8 +162,8 @@ def show_page():
     #-- Write each parameter on the image based on the pixel coordinate
 
     # tickness 1
-    
-    draw.text((0,315), str(sheet_thickness1), colour)
+    font = ImageFont.truetype('docs\Cambria Math.ttf', 20)
+    draw.text((0,315), str(sheet_thickness1), colour,direction='ttb')
     # tickness 2
     draw.text((0,365), str(sheet_thickness2), colour)
     # die depth

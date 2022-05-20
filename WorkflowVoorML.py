@@ -22,6 +22,7 @@ from PIL import Image
 import pickle
 from st_clickable_images import clickable_images
 import base64
+import text
 
 def centerImage(pathImage,width,underscript):
     images = []
@@ -40,20 +41,19 @@ def centerImage(pathImage,width,underscript):
 
 
 def experimenten():
-    st.markdown('## Experimental setup')
-    centerImage(pathImage='docs/Exp_setup.png',width='70%',
-            underscript='')
+    text.WF_experiments()
+    
 
 def simulerenExperimenten():
-    st.markdown('## Deviation between the numerical and experimental data of the 50 best simulations')
-    centerImage(pathImage='docs/Simuleren_results.png',width='70%',
-            underscript='')
+    text.WF_simulations()
 
 def DoE():
     st.markdown('DoE')
 
 def OpbouwDatabase():
     st.markdown('Opbouwen database')
+    data = pd.read_excel("docs/TrainDatabase_712.xlsx")
+    st.dataframe(data)
 
 def ML():
     
@@ -536,13 +536,12 @@ def show_page():
     # logging.info("My own message")
     # Navigationbar
     menu_data = [
-        {'label':"Experimenten"},
-        {'label':"Simuleren"},
+        {'label':"Experiments"},
+        {'label':"Simulation"},
         {'label':"Design of Experiment (DoE)"},
-        {'label':"Opbouwen database"},
-        {'label':"Machine Learning (ML)"},
+        {'label':"Database"},
+        {'label':"Machine Learning (ML) "},
         {'label':"Functions",'submenu':[{'label':"DoE"},{'label':"ML-Training"},{'label':"ML-Predicting"}]}]
-
     over_theme = {'txc_inactive': '#00000','menu_background':'white','txc_active': 'red', }
     menu_id = hc.nav_bar(    
         menu_definition=menu_data,
@@ -556,13 +555,13 @@ def show_page():
     emptycol1,col1,emptycol2 = st.columns([1,6,1])
     with col1:
     # start a def based on the selected tab in the navigationbar
-        if menu_id == "Experimenten":
+        if menu_id == "Experiments":
                 experimenten()
-        if menu_id == "Simuleren":
+        if menu_id == "Simulation":
             simulerenExperimenten()
         if menu_id == "Design of Experiment (DoE)":
                 DoE()
-        if menu_id == "Opbouwen database":
+        if menu_id == "Database":
                 OpbouwDatabase()
         if menu_id == "Machine Learning (ML)":
                 ML()
