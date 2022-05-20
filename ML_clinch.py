@@ -133,9 +133,9 @@ def show_page():
 
         text.Machine_General()
         st.markdown("""
-        * Use the menu at left to fill in the input parameters
-        * The dimensions will be illustrated on the figure below
-        * Once you change a parameter, the strength will automatically be recalculated
+        * 	Use the menu on the left to alter the input parameters
+        *   The corresponding dimensions will be illustrated on the figure below        
+        * 	After changing a parameter, the strength is automatically recalculated
         """)
 
 
@@ -162,8 +162,8 @@ def show_page():
     #-- Write each parameter on the image based on the pixel coordinate
 
     # tickness 1
-
-    draw.text((0,315), str(sheet_thickness1), colour)
+    font = ImageFont.truetype('docs\Cambria Math.ttf', 20)
+    draw.text((0,315), str(sheet_thickness1), colour,direction='ttb')
     # tickness 2
     draw.text((0,365), str(sheet_thickness2), colour)
     # die depth

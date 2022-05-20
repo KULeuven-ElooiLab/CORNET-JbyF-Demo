@@ -81,7 +81,7 @@ def analytical_General():
     ''')
 
     centerImage(pathImage='docs/Analytical.jpg',width='80%',
-            underscript=' ')
+            underscript='')
 
     st.write('''
     Those 4 equations are used in this web application. 
@@ -166,7 +166,7 @@ def WF_experiments():
     the joining process. To take this into account during machine learning, the maximum setting force was used as an input value.
     ''')
 
-    centerImage(pathImage='docs/ProcessCurve.jpg',width='40%',
+    centerImage(pathImage='docs/Processcurve.jpg',width='40%',
             underscript='')
 
     st.write('''
@@ -188,7 +188,32 @@ def WF_experiments():
 
 def WF_simulations():
     st.write('''
-    The simulations are carried out with the help of [Simufact forming](https://www.simufact.com/simufactforming-forming-simulation.html).
+    ### General
+    For the strength prediction with the help of data-based algorithms, a large database needs to be created. 
+    This is possible with only experimental data, but this would be resource and labor intensive. Therefore, in the second step, 
+    we replicate the experiments using an FE-software named [Simufact forming](https://www.simufact.com/simufactforming-forming-simulation.html). 
+    We try to minimize the computational time while maintaining  an acceptable deviation over all three simulation 
+    steps. Through existing functions in this software, it was possible to automate the results transfer from the 
+    joining simulation to the strength test. Which decreased the conversion time drastically.
+    ### Simulation
+    Before we can calculate the strength of the joint with FE-software, the material must be characterized 
+    and a friction model must be selected. For the flow curve of the material showed the stack compression 
+    method the best results. The combine friction method is used due to the fact that it had more influence 
+    on the contour. The parameters was tuned for all 73 cases individually.
     ''')
-    centerImage(pathImage='docs/Simuleren_results.png',width='70%',
+
+    centerImage(pathImage='docs/Simulation-Strategy.jpg',width='70%',
+            underscript='Deviation between the numerical and experimental data of the 50 best simulations')
+
+    st.write('''
+    For the simulation of the joining process (see below) and the pull-out test, a axisymmetric (2D) 
+    model was used to reduce computational time. The results of the joining process was automatically 
+    imported into the strength simulation and revolved for the shear lap test because this was a 3D simulation.
+    ### Results
+    For each simulation step, a deviation between the experiment was calculated. Based on the 
+    average of those steps, 50 out of 73 cases were selected for the next step. This is to improve 
+    our accuracy of the virtual database.
+    ''')
+
+    centerImage(pathImage='docs/ResultsSimulation.jpg',width='70%',
             underscript='Deviation between the numerical and experimental data of the 50 best simulations')
