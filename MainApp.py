@@ -68,6 +68,9 @@ def footer():
         
         link("https://www.vlaio.be/nl",image('https://repairshare.be/wp-content/uploads/2022/01/vlaiologo.png',
         	 height=px(40), marginLeft= "20px",marginRight= "20px")),
+        image('https://www.eitfood.eu/media/partners-startups/fraunhofer_fhg.png',
+        	 height=px(40), marginLeft= "20px",marginRight= "20px"),
+        
         "📝 Contact info: sam.coppieters@kuleuven.be"
         
     ]
