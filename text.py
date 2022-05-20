@@ -166,7 +166,7 @@ def WF_experiments():
     the joining process. To take this into account during machine learning, the maximum setting force was used as an input value.
     ''')
 
-    centerImage(pathImage='docs/Processcurve.jpg',width='40%',
+    centerImage(pathImage='docs/ProcessCurve.jpg',width='40%',
             underscript='')
 
     st.write('''
