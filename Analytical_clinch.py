@@ -80,8 +80,8 @@ def getForce(v,variant):
 def show_page():
 
     # _______________Side bar_______________
-    input_methode = st.sidebar.selectbox('Select input methode', ['Manual','Excel'])
-    if 'Manual' == input_methode:
+    input_method = st.sidebar.selectbox('Select input method', ['Manual','Excel'])
+    if 'Manual' == input_method:
         with st.sidebar.form('input for the formulas'):
             # _______________Variables displayed on the sidebar_______________
 
@@ -145,7 +145,7 @@ def show_page():
             text.analytical_TT()
             text.analytical_ST()
         st.write('### Results')
-        if 'Manual' == input_methode:
+        if 'Manual' == input_method:
             
             
             TT_def = "{:0.2f} kN".format(float(getForce(values,"TT_def")[0]))
@@ -169,7 +169,7 @@ def show_page():
                 modeST = "fracture"
             text.results(TT, modeTT, ST, modeST)
     # -- Based on the selectbox, the strength will be calculated for 1 or multiple joints 
-        if 'Excel' == input_methode:
+        if 'Excel' == input_method:
             try:
                 # read the uploaded file
                 df = pd.read_excel(uploadedFile) # it is important that the titles in the excel are indentical to those used in def 'getForce'
@@ -195,7 +195,7 @@ def show_page():
                 st.warning('You must first upload a file at the sidebar on the left.')
             
         
-    if 'Manual' == input_methode:  
+    if 'Manual' == input_method:  
         
             emptycol1,col1, col2,col3,emptycol2 = st.columns([1,2,2,2,1])
             with col1:
