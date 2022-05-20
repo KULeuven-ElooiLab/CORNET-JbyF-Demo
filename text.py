@@ -81,7 +81,7 @@ def analytical_General():
     ''')
 
     centerImage(pathImage='docs/Analytical.jpg',width='80%',
-            underscript='')
+            underscript=' ')
 
     st.write('''
     Those 4 equations are used in this web application. 
