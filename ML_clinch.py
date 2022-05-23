@@ -153,51 +153,54 @@ def show_page():
     # ----------------Display the image---------------------
 
     #-- Open the image
-    image = Image.open('docs/ClinchParameters.png')
-
+    image1 = Image.open('docs/InputML1.jpg')
+    image2 = Image.open('docs/InputML2.jpg')
     #-- Make it posseble to overlay the image with text 
-    draw = ImageDraw.Draw(image)
     colour = (50,50,50)
+    font = ImageFont.truetype("arial.ttf", 17)
+    font1 = ImageFont.truetype("arial.ttf", 15)
 
     #-- Write each parameter on the image based on the pixel coordinate
-
-    # tickness 1
-    # font = ImageFont.truetype('docs\Cambria Math.ttf', 20)
-    draw.text((0,315), str(sheet_thickness1), colour)
-    # tickness 2
-    draw.text((0,365), str(sheet_thickness2), colour)
+    # -----Tools-----
+    draw = ImageDraw.Draw(image1)
     # die depth
-    draw.text((315,540), str(die_depth), colour)
+    draw.text((305,60), str('{:0.2f}'.format(die_depth))+' mm', colour,font1)
     # diameter anvil
-    draw.text((220,530), str(diameter_anvil), colour)
+    draw.text((190,50), str('{:0.2f}'.format(diameter_anvil))+' mm', colour,font1)
     # die angle wall
-    draw.text((95,560), str(die_angle_wall), colour)
+    draw.text((100,80), str('{:0.2f}'.format(die_angle_wall))+' °', colour,font1)
     # die angle anvil
-    draw.text((150,585), str(die_angle_anvil), colour)
+    draw.text((190,95), str('{:0.2f}'.format(die_angle_anvil))+' °', colour,font1)
     # punch angle wall
-    draw.text((200,180), str(punch_angle_wall), colour)
+    draw.text((555,170), str('{:0.2f}'.format(punch_angle_wall))+' °', colour,font1)
     # punch diameter
-    draw.text((220,225), str(punch_diameter), colour)
+    draw.text((540,210), str('{:0.2f}'.format(punch_diameter))+' mm', colour,font1)
+    # punch diameter
+    draw.text((190,130),'8.00 mm', colour,font1)
+
+    draw = ImageDraw.Draw(image2)
+    # -----Geometrical parameters-----
+    # tickness 1
+    draw.text((20,100), str(sheet_thickness1)+' mm', colour,font)
+    # tickness 2
+    draw.text((20,150), str(sheet_thickness2)+' mm', colour,font)
     # interlock
-    draw.text((115,270), str(interlock), colour)
+    draw.text((168,50), str('{:0.3f}'.format(interlock))+' mm', colour,font)
     # neck tickness
-    draw.text((315,270), str(neck_thickness), colour)
+    draw.text((380,50), str('{:0.3f}'.format(neck_thickness))+' mm', colour,font)
     # bottom thickness
-    draw.text((90,400), str(bottom_thickness), colour)
+    draw.text((100,215), str('{:0.3f}'.format(bottom_thickness))+' mm', colour,font)
     # min bottom thickness top sheet
-    draw.text((400,400), str(min_topThickness), colour)
+    draw.text((130,260), str('{:0.3f}'.format(min_topThickness))+' mm', colour,font)
     # min bottom thickness bottom sheet 
-    draw.text((100,465), str(min_bottomThickness), colour)
-
-    # warnings
-    draw.text((170,100), 'not used in training data', (255,50,50))
-    draw.text((150,610), 'not used in training data', (255,50,50))
-    draw.text((315,590), 'not used in training data', (255,50,50))
-
+    draw.text((555,240), str('{:0.3f}'.format(min_bottomThickness))+' mm', colour,font)
 
     #-- Display the image in Streamlit webApp
-    emptycol1,col,emptycol2 =st.columns([1,2.2,1])
-    with col:
-        st.image(image)
+    emptycol1,col2,emptycol2 =st.columns([1.5,4,1])
+    emptycol1,col1,emptycol2 =st.columns([1.1,3,1])
+    with col1:
+        st.image(image1)
+    with col2:
+        st.image(image2)
 
     return

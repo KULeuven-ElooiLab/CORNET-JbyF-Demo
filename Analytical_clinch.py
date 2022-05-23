@@ -15,10 +15,10 @@ from st_clickable_images import clickable_images
 import base64
 
 
-#-- Make a dictionary of all variables
-values = {'neck_thickness':[],'inner_diameter':[],'radius_disc': [],'wall_thickness': [],'yield_tube': [],
+#-- Make a dictionary of all variables 
+values = {'neck_thickness':[],'inner_diameter':[],'yield_tube': [],
     'yield_disc': [],'coulomb': [],'angle': [],'UTS':[],'t1':[],'interlock':[],'bottom_thickness':[],'AFS':[]
-    }
+    }# 'radius_disc': [],'wall_thickness': []
 def centerImage(pathImage,width,underscript):
     images = []
     
@@ -37,21 +37,24 @@ def centerImage(pathImage,width,underscript):
 def getForce(v,variant):
         list_strength = []
         for i in range(len(list(v.values())[0])):
-            # Formula coppieters
+           
             A = pi/4*((v['inner_diameter'][i]+2*v['neck_thickness'][i])**2-v['inner_diameter'][i]**2)
             B = v['coulomb'][i]/np.tan(np.radians(v['angle'][i]))
-            ExitRod =v['inner_diameter'][i]+2*v['wall_thickness'][i]
+            
             if v['interlock'][i]/np.tan(np.radians(v['angle'][i]))<v['bottom_thickness'][i]:
                 ExitRod1 = v['inner_diameter'][i]+2*v['neck_thickness'][i]
             else:
                 ExitRod1 = v['inner_diameter'][i]+2*(v['neck_thickness'][i]+v['interlock'][i]-v['bottom_thickness'][i]*np.tan(np.radians(v['angle'][i])))
             EntryRod1 = v['inner_diameter'][i]+2*(v['neck_thickness'][i]+v['interlock'][i])
             Q = (ExitRod1**2*v['yield_disc'][i]*((1+B)/B)*(1-(ExitRod1/EntryRod1)**(2*B)))/(ExitRod1**2-v['inner_diameter'][i]**2)
-            q = (ExitRod**2*v['yield_disc'][i]*((1+B)/B)*(1-(ExitRod/v['radius_disc'][i])**(2*B)))/(ExitRod**2-v['inner_diameter'][i]**2)
+            
             H = ((4*pi)/np.sqrt(3))*v['yield_tube'][i]*((1+B)/(2*pi-(1+B)))
             G = (2/np.sqrt(3))*v['yield_tube'][i]*((1+B)/(B))
             P = (((v['inner_diameter'][i]+2*v['neck_thickness'][i])**2-v['inner_diameter'][i]**2)/(ExitRod1**2-v['inner_diameter'][i]**2))**B
-            p = (((v['inner_diameter'][i]+2*v['neck_thickness'][i])**2-v['inner_diameter'][i]**2)/(ExitRod**2-v['inner_diameter'][i]**2))**B
+        # Formula coppieters    
+            # ExitRod =v['inner_diameter'][i]+2*v['wall_thickness'][i]
+            # q = (ExitRod**2*v['yield_disc'][i]*((1+B)/B)*(1-(ExitRod/v['radius_disc'][i])**(2*B)))/(ExitRod**2-v['inner_diameter'][i]**2)
+            # p = (((v['inner_diameter'][i]+2*v['neck_thickness'][i])**2-v['inner_diameter'][i]**2)/(ExitRod**2-v['inner_diameter'][i]**2))**B
 
             if variant == 'TT_def':
                 # if bottom thickness is greater then the interlock height
@@ -61,9 +64,9 @@ def getForce(v,variant):
                 else:
                     TT_def = A*(G+(Q-G)*P)/1000
                 list_strength.append(TT_def)
-            elif variant == 'TT_def_original':
-                TT_def_original = A*(G+(q-G)*p)*0.63/1000
-                list_strength.append(TT_def_original)
+            # elif variant == 'TT_def_original':
+            #     TT_def_original = A*(G+(q-G)*p)*0.63/1000
+            #     list_strength.append(TT_def_original)
             elif variant == 'TT_frac':
                 TT_frac = A * v['UTS'][i]/1000
                 list_strength.append(TT_frac)
@@ -90,9 +93,9 @@ def show_page():
             #-- Set inner diameter clinch 
             values['inner_diameter']=[st.number_input('What is the inner diameter of the clinch d [mm]', value = 5.84)]
             #-- Set max radius disc
-            values['radius_disc']=[st.number_input('What is the max radius of the disc [mm]', value = 7.77)]
+            # values['radius_disc']=[st.number_input('What is the max radius of the disc [mm]', value = 7.77)]
             #-- Set max wall thickness 
-            values['wall_thickness']=[st.number_input('What is the max wall thickness [mm]', value = 0.883)]
+            # values['wall_thickness']=[st.number_input('What is the max wall thickness [mm]', value = 0.883)]
             #-- Set ultimate tensile stress  
             values['UTS']=[st.number_input('What is the UTS of the top sheet [MPa]', value = 260)]
             #-- Set average yield stress tube 
@@ -128,22 +131,9 @@ def show_page():
         # -- print a discription of the formulas
         text.analytical_General()
 
-        
-
-            
+     
         text.analytical_howItWorks()
         
-        with st.expander("Discription of the calculation parameter"):
-            centerImage(pathImage='docs/Parameter1.jpg',width='70%',
-            underscript='Basic parameters that can be measured during a cross section analysis')
-            centerImage(pathImage='docs/Parameters2.png',width='100%',
-            underscript='These are the average stresses taken from the FE-software. Left: Simplification based on tube drawing process. Right: Combination of tube and rod drawing ')
-            
-
-        with st.expander("Discription of the formulas"):
-            
-            text.analytical_TT()
-            text.analytical_ST()
         st.write('### Results')
         if 'Manual' == input_method:
             

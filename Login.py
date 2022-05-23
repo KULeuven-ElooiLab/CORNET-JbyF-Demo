@@ -11,6 +11,5 @@ def show_page():
             return 3
         else:
             col.warning("Username or password is not correct.")
-    col.write('''username: JbyF 
-    \n password: Cornet''')
+    
     return 4

@@ -47,59 +47,81 @@ def intro():
 
     st.markdown("""
     # Description of the project
-    Currently the design of mechanical joining processes like self-pierce riveting with 
-    semi-tubular rivet (SPR-ST) and clinching for production is subject to complex and experimental test 
-    series in which process parameters such as the rivet or die geometry are varied iteratively and based 
-    on experience until a suitable joint contour and strength is achieved. To simplify the use of mechanical 
-    joining technologies, these development cycles and thereby the effort for implementation into production must be reduced.
+    The application of mechanical joining technology in various branches of industry such as 
+    automotive engineering, construction and white goods has increased considerably over the 
+    last 20 years. In order to ensure further growth of these resource-saving joining processes, 
+    new users must be able to design these processes quickly and without extensive process know-how. 
+    This goal is pursued in the project proposal described here.
+    \n Currently, there are two basic evaluation methods for the design of mechanical joints: 
+    on the one hand the evaluation of the joint quality via the geometric characteristics 
+    of the joint through cross section analysis and on the other hand the evaluation of 
+    the joint via the testing of the strength by destructive testing. In principle, it is 
+    known that the geometric characteristics such as interlock or neck thickness are directly 
+    related to the strength of the joints but a quantitative correlation for different 
+    material thickness combinations has not yet been investigated.
     """)
 
     centerImage(pathImage='docs/IntroPic.png',width='70%',
-            underscript='Basic parameters that can be measured during a cross section analysis')
-    
+            underscript='Visualization of the project goal')
 
-    st.markdown("### Data-based algorithms")
-    
-
-    
-    st.markdown("""
-    ### Analytical formulas
-    To predict the strength using analytical formulas, a literature review was done. Papers were found only for 
-    clinch joints. When predicting the strength with analytical formulas, it is important to know that there are two dominant 
-    failure mechanisms. The first dominant failure mode is fracture in the punch side sheet. The second failure mode is 
-    completely dominated by plastic deformation. In this case, the clinch joint will locally deform hereby reducing the 
-    interlock between both sheets eventually leading to unbuttoning of the joint. In practice, a combination of both failure modes occurs.
-    The predominant failure mode of the clinch is determined by the calculated lower bound strength.
+    st.write("""
+    \n The aim of the project described here is to enable a prognosis of the joint strength 
+    for self-pierce riveting with semi-tubular rivets (SPR-ST) and clinching on the basis of 
+    geometrical characteristics of the joints as well as the material properties of the parts 
+    to be joined. Data-based algorithms (machine learning) and analytical methods will be 
+    investigated as prognosis methods. In this way, large experimental series of tests can be 
+    avoided and the mechanical joints can be dimensioned many times faster.
+    \n This project objective is achieved by determining the correlations between joint geometry 
+    and strength on a large number of material thickness combinations experimentally and by 
+    means of numerical simulation. On the basis of this data, learning algorithms can be 
+    trained and the analytical methods can be validated in order to achieve the highest possible 
+    prediction quality at the end of the project. 
     """)
+
+    
+    
+
 
 def analytical_General():
     st.write('''
     ### General
-    Based on several parameters is it possible to predict the maximum force that the joint can handel. 
-    These calculations are divided into 2 groups of failure. Viz, deformation and fracture dominant 
-    failure. In the literature, various equations have been found for both the pull-out and the shear 
-    tensile tests. Based on 50 cases, we defined the best performing equations. 
+    Based on several parameters is it possible to analytically predict the strength of the joint. 
+    These calculations are divided into two groups depending on the type of failure. From an 
+    analytical viewpoint, it is possible to arrive at a solution for a failure that is dominated 
+    by i) plastic deformation or ii) fracture. In the literature, various equations have been proposed 
+    to predict the strength under the pull-out and the shear tensile loading. Based on 50 
+    cases in our database for clinched joints, we defined the best performing analytical predictions. 
+    Those four analytical approaches are implemented  this web application. 
+    \n To know the strength of the joint in a particular loading condition, you need to calculate 
+    the strength associated with  both failure modes. By comparing both the strengths, the lowest 
+    strength serves as the predicted strength for the investigated joint configuration and loading condition.  
     ''')
 
     centerImage(pathImage='docs/Analytical.jpg',width='80%',
             underscript='')
 
-    st.write('''
-    Those 4 equations are used in this web application. To know the maximum strength of the joint in a 
-    particular loading condition, you need to calculate the strength of both failure modes. 
-    The lowest calculated force will be the strength of the joint and the condition of failure. 
-    ''')
-
 def analytical_howItWorks():
     st.write('''
     ### How it works
-    On the left, you have the sidebar with all parameters needed for the calculations. 
-    You can fill those in for one particular case. Or, if you want to predict the strength 
-    of multiple joints at once, there is also a tool where you upload your excel file. 
-    You can download the template in the sidebar and re-upload it with your data.
-    \n In order to understand the parameters, a small description can be found below. 
-    Together with the discription of the formulas.
+    On the left hand side of this web App you have a sidebar where all parameters 
+    are located that are needed for the calculations. You can fill those in for 
+    one particular case. Or, in case you want to predict the strength for multiple 
+    cases, there is also a tool where you upload your excel file. You can download 
+    the template below. This excel file can upload to process your data.
+    \n A small parameter description and the analytical formulas can be 
+    found in the dropdown boxes below, respectively.
     ''')
+    with st.expander("Discription of the calculation parameter"):
+            centerImage(pathImage='docs/Parameter1.jpg',width='70%',
+            underscript='Basic parameters that can be measured during a cross section analysis')
+            centerImage(pathImage='docs/Parameter2.jpg',width='100%',
+            underscript='These are the average stresses taken from the FE-software. Left: Simplification based on tube drawing process with a die angle α. Right: Combination of tube and rod drawing ')
+            
+
+    with st.expander("Discription of the formulas"):
+            
+            analytical_TT()
+            analytical_ST()
 
 def analytical_TT():
     
@@ -140,9 +162,10 @@ def analytical_ST():
     
 def results(strengthTT,modeTT,strengthST,modeST):
     st.write(f'''
-    Based on the manual input, we expect the joint to fail around **{strengthTT} during a top tensile test**. Where {modeTT} failure is dominant. 
-    During **a shear lap test**, we predict that the joint can withstand **{strengthST}** with {modeST} as dominant failure mode.
-    \n The results of all 4 calculations can be seen in the table below: 
+    Based on the manual input for the clinching joint under investigation, the analytical analysis predicts a joint  failure at 
+    **{strengthTT}** during **top tensile load** where failure is dominated by {modeTT}. 
+    During a **shear load** we predict that the joint can withstand **{strengthST}** with {modeST} as dominant failure mode. 
+    \n The results of all four analytical calculations can be seen in the table below. 
     ''')
 
 def  Machine_General():
@@ -157,23 +180,24 @@ def  Machine_General():
 def WF_experiments():
     st.write('''
     ### General
-    The first step towards the strength prognosis of a clinch joint is collecting experimental data. 
-    This data is then used for the validation of finite element (FE) simulations as well as for the prognosis quality 
-    of data-based algorithm. Based on four materials (three steel and one aluminium grade) with minimum three 
-    different sheet thicknesses, a statistical test plan with 73 material combinations was created for the experimental tests.
-    \n
+    The first step towards the data-driven strength prognosis of a clinch joint is collecting experimental data. 
+    This data is then used for the validation of finite element (FE) simulations as well as for increasing the 
+    prognosis quality of the data-based algorithm. Based on four materials (three steel and one aluminium grade) 
+    with a minimum of three different sheet thicknesses, a statistical test plan with 73 material combinations 
+    was created for the experimental  campaign.
     ### Experimental data of the joint
-    \n In order to validate the stress state within the material, the force-displacement curve was measured during 
-    the joining process. To take this into account during machine learning, the maximum setting force was used as an input value.
+    In order to validate the stress state within the material, the force-displacement curve was measured during 
+    the joining process. To take this into account during the machine learning process, the maximum setting 
+    force was used as an input value.
     ''')
 
     centerImage(pathImage='docs/ProcessCurve.jpg',width='40%',
             underscript='')
 
     st.write('''
-    The typical geometrical parameters were also measured via a cross section analysis. These parameters were used for 
-    the validation and as input values for the machine learning. The cross section itself was used to tune the friction 
-    parameters so the joint contour from the simulation  would be identical to the experiment.
+    The typical geometrical parameters were also measured via a cross-section analysis. These parameters were 
+    used for the validating the simulations  and as input values for the machine learning process. 
+    The experimental cross-section was used to tune the frictional parameters in the FE model used to simulated the joining process. 
     ''')
     
     centerImage(pathImage='docs/CrossSection-M.png',width='60%',
@@ -181,8 +205,9 @@ def WF_experiments():
 
     st.write('''
     ### Experimental data of the joint strength
-    \n For the strength, two different loading conditions were tested, pull-out or top tensile test and the shear lap test. 
-    From the process curves, only the maximum force (joint strength) was used in further steps.
+    For assessing the joint strength, two different loading conditions were used, namely the pull-out 
+    (also referred to as the top tensile test) and the shear lap test. It must be noted that only the 
+    maximum force during the experiments (joint strength) was used in further steps.
     ''')
     centerImage(pathImage='docs/StrengthTests.jpg',width='80%',
             underscript='Two loading conditions used for the determination of the max force. Left: Pull-out Right: Shear lap')
@@ -190,30 +215,35 @@ def WF_experiments():
 def WF_simulations():
     st.write('''
     ### General
-    For the strength prediction with the help of data-based algorithms, a large database needs to be created. 
-    This is possible with only experimental data, but this would be resource and labor intensive. Therefore, in the second step, 
-    we replicate the experiments using an FE-software named [Simufact forming](https://www.simufact.com/simufactforming-forming-simulation.html). 
-    We try to minimize the computational time while maintaining  an acceptable deviation over all three simulation 
-    steps. Through existing functions in this software, it was possible to automate the results transfer from the 
-    joining simulation to the strength test. Which decreased the conversion time drastically.
+    For the strength prediction with the help of data-based algorithms, a large database is required. This is possible 
+    with only experimental data, but this would be costly and labor intensive. Therefore, in the second step, 
+    we replicate the experiments using a FE-software called 
+    [Simufact forming](https://www.simufact.com/simufactforming-forming-simulation.html). In this project, 
+    our aim was to find a trade-off between computational effort and predictive accuracy of the FE model 
+    considering the three simulation steps (joining, pull-out and shear lap testing). Through existing functions 
+    in this software, it was possible to automate the results transfer from the joining simulation to the strength 
+    test. Which decreased the conversion time drastically.
     ### Simulation
-    Before we can calculate the strength of the joint with FE-software, the material must be characterized 
-    and a friction model must be selected. For the flow curve of the material showed the stack compression 
-    method the best results. The combine friction method is used due to the fact that it had more influence 
-    on the contour. The parameters was tuned for all 73 cases individually.
+    Before we can calculate the strength of the joint with the FE-software, the material must be characterized and 
+    a friction model must be selected. It was shown in a previous project [1](https://cornet.efb.de/general-description-flow-curve-jbyf.html ) that the clinching forming simulation 
+    is most accurate when measuring the flow curve using the stack compression test. Consequently, all 
+    flow curves in this project are determined using the stack compression test. The combined friction 
+    method is deeded an appropriate model for mechanical joining simulations. It is shown that this frictional 
+    model enables to accurately simulate the metal flow during joining. The governing parameters of the 
+    combined friction model were individually tuned for all 73 cases.
     ''')
 
     centerImage(pathImage='docs/Simulation-Strategy.jpg',width='70%',
             underscript='Deviation between the numerical and experimental data of the 50 best simulations')
 
     st.write('''
-    For the simulation of the joining process (see below) and the pull-out test, a axisymmetric (2D) 
-    model was used to reduce computational time. The results of the joining process was automatically 
-    imported into the strength simulation and revolved for the shear lap test because this was a 3D simulation.
+    For the simulation of the joining process (see below) and the pull-out test, an axisymmetric (2D) 
+    model was used to reduce computational time. The results of the joining process were automatically 
+    imported into the strength simulation and subsequently revolved for the shear lap test, which requires a 3D simulation.
     ### Results
-    For each simulation step, a deviation between the experiment was calculated. Based on the 
-    average of those steps, 50 out of 73 cases were selected for the next step. This is to improve 
-    our accuracy of the virtual database.
+    For each simulation step, a deviation between the experiment was calculated. Based on the average 
+    deviation of those steps, 50 out of 73 cases were selected for the next step. The latter elimination 
+    was required to improve the accuracy of the virtual database.
     ''')
 
     centerImage(pathImage='docs/ResultsSimulation.jpg',width='70%',
@@ -222,14 +252,15 @@ def WF_simulations():
 def WF_DoE():
     st.write('''
     ### General
-    From the 73 experiments, we selected the 50 best simulations. With those databases is it possible 
-    to train some basic machine learning algorithms. But, once you use more advanced models, there 
-    is a need for more data. To achieve a larger database, variations are made on the 50 best validated 
-    simulations. With the help of these virtual experiments, we can lower the cost and save resources. 
-    By making several parameters variable, you rapidly end up with a large amount of variations. 
-    Therefore we do a Design of Experiments (DoE) to select 20 variations without losing the overall 
-    responds of all possible combinations. In the function tab above, you can create your own DoE. 
-    Because we are working in a virtual environment, variations on the tools are cheaper to accomplice.   
+    From the 73 experiments, we selected the 50 most accurate simulations. With this database is it 
+    possible to train some basic machine learning algorithms. However, it must be emphasized that 
+    once you use more advanced models, there is obviously a need for more data. To achieve a larger 
+    database, variations are made on the 50 most accurate simulations. With the help of these virtual 
+    experiments, we can lower the cost and save resources. By making several parameters variable, you 
+    rapidly end up with a large amount of variations. Therefore, we firstly perform a Design of 
+    Experiments (DoE) to select 20 variations without losing the overall response of all possible combinations. 
+    In the function tab above, you can create your own DoE. Because we are working in a virtual environment, 
+    variations on the joining tools are cheaper to obtain.      
     ''')
 
     centerImage(pathImage='docs/Principle_DoE.jpg',width='70%',
@@ -237,56 +268,55 @@ def WF_DoE():
 
     st.write('''
     ### Variable parameters
-    The parameters are chosen based on there influence on the geometrical parameters and strength of the joint. 	
+    The parameter variations  are chosen based on their  influence on the geometrical parameters and strength of the joint. 		
     > * Material property: Scaling flow curve
     > * Process parameter: Bottom thickness tb
-    > * Tool geometry:
+    > * Tool geometry: the parameters shown in the figure below are considered as variables.
     ''')
     centerImage(pathImage='docs/VariedParameters.jpg',width='50%',
             underscript='')
 
 def WF_MachineLearning():
     st.write('''
-    Genaral
+    Under construction
     ''')
 
 def WF_function_DoE():
     st.write('''
     ### How it works
-    With this function is it possible to do your own design of experiment. With the help of the 
-    Latin hypercube sampling method,  a certain amount of samples can be taken from the 
-    larger matrix with all possible combinations. To do the DoE, the following steps need to be undertaken:
-    >   1.	Fill in the names of the parameters you want to vary. There must be at least two variables filled in.
-    >   2.	Open the sidebar by pressing on **'>'** in the top left corner. 
-    >   3.	Select the amount of samples you want to take.
-    >   4.	Define each parameters: discreet or continue and the boundaries.
-    >   5.	Download the DoE under the visualization of the first 2 variables
-
+    With this function is it possible to do your own design of experiments. With the help of the Latin 
+    hypercube sampling method, a certain amount of samples can be taken from the larger matrix with all 
+    possible combinations. To do the DoE, follow the steps below
+    >   1.	Fill in the names of the parameters that you want to vary. There must be at least two variables.
+    >   2.	Open the sidebar by pressing on the **>** in the top left corner. 
+    >   3.	Select the amount of samples that you want to take.
+    >   4.	Define each parameter: discreet or continue and the boundaries for each of the parameter
+    >   5.	Download the DoE under the visualization of the first 2 variables.
     ''')
 
 def WF_function_ML_Train():
     emptycol1,col,emptycol2=st.columns([1,6,1])
     st.write('''
     ### How it works
-    This function makes it possible to train six different regression algorithms. Before using 
-    this function, we recommend you to read the machine learning tab first. This will give you 
-    more insight of the working and workflow of machine learning. With this function is it 
-    possible to train and save your best model for each algorithm and output variable. This 
-    is possible after completing the following steps:
+    This function makes it possible to train six different regression algorithms. Before using this 
+    function, we recommend you to read the machine learning tab first. This will give you 
+    more insight concerning  the working and workflow of machine learning. With this function 
+    is it possible to train and save your best model for each algorithm and output variable. 
+    This is possible after completing the following steps:
     ''')
     with st.expander("1.    Define the database:"):
         st.write('''
-        -Standard, the database of the project is used. There is also the possibility to upload your 
-        own database. Simply upload your file and select uploaded in the drop down menu.
+        By default, the database of the project is used. There is also the possibility to upload 
+        your own database. Simply upload your file and select uploaded in the drop down menu.
         ''')
     
     with st.expander("2.	Define the in- and output:"):
         st.write('''
-        Start with selecting the output variables that you want to predict. By pressing on the 
-        button **‘Transfer remaining variables to input’**, all remaining names transfer to the 
-        drop down menu on the right. Delete the variables you don’t need. Once you press on 
-        **‘Set the in- & output’**, a visualization of the database is created with the colors for the in- 
-        and output. Press **‘Yes’** to continue with these settings.
+        Start with selecting the output variables that you want to predict. By pressing on the button 
+        **‘Transfer remaining variables to input’**, all remaining names transfer to the drop down menu on 
+        the right. Delete the variables that you don’t need. Once you select **‘Set the in- & output’**, 
+        a visualization of the database is created with the colors for the in- and output. Press **‘Yes’** 
+        to continue with these settings.
         ''')
     
     with st.expander("3.	Select an algorithm:"):
@@ -299,34 +329,32 @@ def WF_function_ML_Train():
     
     with st.expander("4.	Select the hyperparameters that you want the change:"):
         st.write('''
-        To improve the prediction possibility of the algorithm, it is possible tune the 
-        hyperparameters. If you hover over the **‘?’**, a short description is given for that 
-        hyperparameter. Select the ones you want to change and press on **‘Start tuning …’**
+        To improve the predictive accuracy of the algorithm, it is possible to tune the hyperparameters. 
+        If you hover over the **‘?’**, a short description is given for that hyperparameter. Select the ones 
+        you want to change and press **‘Start tuning …’**
         ''')
     
     with st.expander("5.	Define the boundaries of the hyperparameters:"):
         st.write('''
-        With the use of a grid search, all possible combinations of hyperparameters will be tried out. 
-        Consequently, training time will increase drastically when you increase the possible 
-        values of the hyperparameters.  Based on the type of the hyperparameter, different boundaries 
-        will be defined. For a integer of float, a min and max boundary needs to be defined. As wall 
-        as an value **‘#’** what divides the interval in that amount of equal parts. The bigger this 
-        value, the more time it will take to train the model. Press **‘Start to train’** when all 
-        boundaries are defined.
+        With the use of a grid search, all possible combinations of hyperparameters will be considered. 
+        Consequently, training time will increase drastically when you increase the possible values of 
+        the hyperparameters. Based on the type of the hyperparameter, different boundaries will be 
+        defined. For an integer or float, a min and max boundary needs to be defined. Also a value 
+        **‘#’** dividing the interval in that amount of equal parts. The bigger this value, the more time 
+        it will take to train the model. Press **‘Start to train’** when all boundaries are defined.
         ''')
     
     with st.expander("6.	Train the model:"):
         st.write('''
         Because the algorithm can only be trained for one specific output variable at once, 
-        this needs to be selected. Now, press on **‘Train’** and wait until a table and graph is 
-        plotted. In the table can all possible combinations be found with their r²-value. In 
-        the most right column, you can rearrange the table based on their rank. This can help 
-        to tune the hyperparameters even more. In the graph, the prediction against the 
-        measured value can be seen for the best (ranked as number 1) hyper settings. Once 
-        you are satisfied with the result, press on **‘Download the trained model’**. This will 
-        download the best model that you have achieved for that particular algorithm, 
-        hyperparameters and output variable. With this file is it know possible to go to 
-        the function ML-Predicting.
+        this needs to be selected. Now, select **‘Train’** and wait until a table and graph is plotted. 
+        In the table can all possible combinations be found with their r²-value. In the most right 
+        column, you can rearrange the table based on their rank. This can help to tune the 
+        hyperparameters even more. In the graph, the prediction against the measured value 
+        can be seen for the best (ranked as number 1) hyper settings. Once you are satisfied 
+        with the result, press on **‘Download the trained model’**. This will download the best 
+        model for that particular algorithm, hyperparameters and output variable. With this 
+        file is it now possible to go to the function **ML-Predicting**.
         ''')
 
     st.write('''
@@ -338,8 +366,8 @@ def WF_function_ML_Predict():
     ### How it works
     Before you can do your prediction, a machine learning model needs to be trained. This 
     can be done in the function tab ML-training. Once you have this, upload this file below 
-    this text. Now, two options can  be selected in the sidebar:
-    >   1.	**Manual:** Based on the input variables of the model, input field are created in the sidebar. With this method, a fast prediction can be made for one case.
-    >   2.	**Excel:** Based on the input variables of the model, a template (csv file) with the correct column tags can be downloaded. Complete this with your data and save this an excel file. After you re-upload this file, the predictions can be downloaded.
-    ### Start predicting
+    this text. Now, two options can be selected in the sidebar:
+    >   **1.	Manual:** Based on the input variables of the model, input fields are created in the sidebar. With this method, a fast prediction can be made for one case.
+
+    >   **2.	Excel:**  Based on the input variables of the model, a template (csv file) with the correct column tags can be downloaded. Complete this with your data and save this an excel file. After you upload this file, the predictions can be downloaded.
     ''')
