@@ -111,14 +111,14 @@ def analytical_howItWorks():
     \n A small parameter description and the analytical formulas can be 
     found in the dropdown boxes below, respectively.
     ''')
-    with st.expander("Discription of the calculation parameter"):
+    with st.expander("Description of the calculation parameter"):
             centerImage(pathImage='docs/Parameter1.jpg',width='70%',
             underscript='Basic parameters that can be measured during a cross section analysis')
             centerImage(pathImage='docs/Parameter2.jpg',width='100%',
             underscript='These are the average stresses taken from the FE-software. Left: Simplification based on tube drawing process with a die angle α. Right: Combination of tube and rod drawing ')
             
 
-    with st.expander("Discription of the formulas"):
+    with st.expander("Description of the formulas"):
             
             analytical_TT()
             analytical_ST()
