@@ -158,7 +158,7 @@ def show_page():
     #-- Make it posseble to overlay the image with text 
     colour = (50,50,50)
     font = ImageFont.truetype(font="docs/Cambria Math.ttf", size=17)
-    font1 = ImageFont.truetype("arial.ttf",15)
+    font1 = ImageFont.truetype(font="docs/Cambria Math.ttf", size=15)
 
     #-- Write each parameter on the image based on the pixel coordinate
     # -----Tools-----
