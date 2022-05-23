@@ -110,17 +110,17 @@ def show_page():
         st.markdown("# Fill in the joining results")
 
         #-- Set interlock 
-        interlock = st.number_input('What is the interlock [mm]', value = 0.38)
+        interlock = st.number_input('What is the interlock [mm]', value = 0.224)
         #-- Set neck thickness 
-        neck_thickness = st.number_input('What is the neck thickness [mm]', value = 0.387)
+        neck_thickness = st.number_input('What is the neck thickness [mm]', value = 0.375)
         #-- Set bottom thickness 
-        bottom_thickness = st.number_input('What is the bottom thickness [mm]', value = 0.673)
+        bottom_thickness = st.number_input('What is the bottom thickness [mm]', value = 0.68)
         #-- Set min bottom thickness top sheet 
-        min_topThickness = st.number_input('What is the min bottom thickness top sheet [mm]', value = 0.43)
+        min_topThickness = st.number_input('What is the min bottom thickness top sheet [mm]', value = 0.379)
         #-- Set min bottom thickness bottom sheet 
-        min_bottomThickness = st.number_input('What is the min bottom thickness bottom sheet [mm]', value = 0.193)
+        min_bottomThickness = st.number_input('What is the min bottom thickness bottom sheet [mm]', value = 0.202)
         #-- Set joining force
-        joining_force = st.number_input('What is the max joining force [kN]', value = 54)
+        joining_force = st.number_input('What is the max joining force [kN]', value = 47.882)
         st.form_submit_button('apply changes')
 
 
@@ -160,6 +160,7 @@ def show_page():
     font = ImageFont.truetype(font="docs/Cambria Math.ttf", size=17)
     font1 = ImageFont.truetype(font="docs/Cambria Math.ttf", size=15)
 
+        
     #-- Write each parameter on the image based on the pixel coordinate
     # -----Tools-----
     draw = ImageDraw.Draw(image1)
