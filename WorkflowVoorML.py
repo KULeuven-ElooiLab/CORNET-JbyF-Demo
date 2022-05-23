@@ -48,7 +48,7 @@ def simulerenExperimenten():
     text.WF_simulations()
 
 def DoE():
-    st.markdown('DoE')
+     text.WF_DoE()
 
 def OpbouwDatabase():
     st.markdown('Opbouwen database')
@@ -56,8 +56,7 @@ def OpbouwDatabase():
     st.dataframe(data)
 
 def ML():
-    
-    st.markdown('ML')
+    text.WF_MachineLearning()
 
 def feature_DoE():
     def transform(listvar,continuity, colomLHS,col):
@@ -73,12 +72,12 @@ def feature_DoE():
                         x[i,col]=listvar[j]
                         break
                 
-        
+    text.WF_function_DoE()  
     list_var = []
 
     # define the variables with there names
     keywords = st_tags(
-    label='# Enter Keywords:',
+    label='### Enter Keywords',
     text='Press enter to add more',
     value=[],
     key="1")
@@ -86,7 +85,10 @@ def feature_DoE():
     # do the latin hypercube sampling 
     column = 0
     samp = int(st.sidebar.number_input('How many samples do you want to pick?',min_value=1))
-    x = lhs(len(keywords),samples=samp,criterion="center")
+    if len(keywords)>1:
+        x = lhs(len(keywords),samples=samp,criterion="center")
+    else:
+        st.warning("A minimum of 2 vaiables need to be assigned")
     
 
     # Define the interval of each variable
@@ -95,7 +97,7 @@ def feature_DoE():
         list_temp.append(key)
         st.sidebar.markdown(f"# {key}")
         list_temp.append(st.sidebar.radio(f"How to vary {key}",('discreet','continu')))
-
+        
         if list_temp[1]=='continu':
             Var = st_tags_sidebar(
             label=f'Enter values for the variable: {key}',
@@ -103,27 +105,42 @@ def feature_DoE():
             maxtags=2,
             )
             
-            list_temp.append(np.sort(list(map(float, Var))))
         elif list_temp[1]=='discreet':
             Var = st_tags_sidebar(
             label=f'Enter values for the variable: {key}',
             text='Press enter to add more',
             )
 
+        try:
             list_temp.append(np.sort(list(map(float, Var))))
-
+        except:
+            st.sidebar.warning("Value must be en float or integer")
         # list with name, discreet/continu, interval
         list_var.append(list_temp)
     
+    # with st.sidebar.form('select parameters to visualize'):
+    #         xlabel = st.selectbox(list_var[0])
+    #         if st.form_submit_button("Plot "):
+    #             st.write('niels')
+
+    
     # display the charters for 2 values
-    try:
+    min_inputlength = True
+    for i in range(len(list_var)):
+        if len(list_var[i][2])<2:
+            min_inputlength = False
+
+    
+    if min_inputlength and len(keywords)>1:
         # display the fundamental charter of LHS
+        
         fig, axs = plt.subplots(1,2,figsize=(9, 4))
+            
         for i in range(samp-1):
-            axs[0].axvline(x=(i+1)/samp, color='grey')
-            axs[0].axhline(y=(i+1)/samp, color='grey')
-            axs[0].plot(x[:, 0], x[:, 1], "o")
-        axs[0].set_xlabel(f"x1 ({list_var[0][0]})")
+                axs[0].axvline(x=(i+1)/samp, color='grey')
+                axs[0].axhline(y=(i+1)/samp, color='grey')
+                axs[0].plot(x[:, 0], x[:, 1], "o")
+        axs[0].set_xlabel(f"x1 ({list_var[1][0]})")
         axs[0].set_ylabel(f"x2 ({list_var[1][0]})")
         axs[0].set_xlim(xmin = 0, xmax = 1)
         axs[0].set_ylim(ymin = 0, ymax = 1)
@@ -138,28 +155,26 @@ def feature_DoE():
         # print(list_var[0][2])
         if list_var[0][1]== "discreet":
             axs[1].xaxis.set_major_locator(FixedLocator(list_var[0][2]))
-            plt.setp(axs[1].get_xticklabels(), rotation=45, horizontalalignment='right')
         if list_var[1][1]== "discreet":
             axs[1].yaxis.set_major_locator(FixedLocator(list_var[1][2]))
         st.pyplot(fig)
-    
         # import al the data into de dictionary 'val'
         val={}
         for j in range(len(keywords)):
             temp = []
-            for i in range(samp):
-                temp.append(x[i][j])
-            val[keywords[j]]=temp
+        for i in range(samp):
+            temp.append(x[i][j])
+        val[keywords[j]]=temp
         
         # add the results to the dataframe
         df = pd.DataFrame.from_dict(val)
 
         # Make it posible to download the results as csv file
-            # file_name = st.text_input('Name the file', "Strength_predictions")
         st.download_button('Download the DoE', df.to_csv(sep = ';',index=False,decimal=','), file_name = "Your_own_DoE" + ".csv")
-    except:
-        st.warning('A minimum of 2 vaiables need to be assigned')
-
+    
+    elif len(keywords)>1:
+        st.warning('There are some boundaries missing')
+        
 def feature_ML_Train():
     #All the algorithms that can be chosen. Add here your algorithm if you want
     def get_algorithm(alg): 
@@ -229,6 +244,7 @@ def feature_ML_Train():
                             ax.legend([extra], [scores], loc="upper left")
                             ax.set_title(title)
 
+    text.WF_function_ML_Train()
     # define the variables that can be saved during in the memory
     if 'Input' not in st.session_state:
         st.session_state['Input'] = False
@@ -238,17 +254,18 @@ def feature_ML_Train():
         st.session_state['best_result']=0
 
     # select the database that you want to use for the training
-    databases = {"synthetic (n=712)": "docs/TrainDatabase_712.xlsx"}
-    col1, col2 = st.columns(2)
-    uploadedFile  = col2.file_uploader("Import the excel with all your data",type=["xlsx"])
-    if uploadedFile:
-        databases["uploaded"]=uploadedFile
-    database = col1.selectbox("Select database",databases.keys())
-    data = pd.read_excel(databases[database])
+    with st.expander('Define the database'):
+        databases = {"synthetic (n=712)": "docs/TrainDatabase_712.xlsx"}
+        col1, col2 = st.columns(2)
+        uploadedFile  = col2.file_uploader("Import the excel with all your data",type=["xlsx"])
+        if uploadedFile:
+            databases["uploaded"]=uploadedFile
+        database = col1.selectbox("Select database",databases.keys())
+        data = pd.read_excel(databases[database])
     
     
 
-    with st.expander('Select the in and output',expanded=True).form('Select in and out put variables'):
+    with st.expander('Define the in- and output',expanded=True).form('Select in and out put variables'):
         
         col1,col2 = st.columns(2)
         col1.markdown('### Output')
@@ -301,13 +318,14 @@ def feature_ML_Train():
         st.session_state["Input"]=True
         col1,col2 = st.columns(2)
         
-        with col1.expander('Select the algorithms'):
+        with col1.expander('Select an algorithm'):
             algorithm = st.radio('Select the algorithm',('LinearRegression','HuberRegressor','SVR','KNeighborsRegressor','GradientBoostingRegressor','MLPRegressor'))
                 # [LinearRegression(),HuberRegressor(),SVR(),KNeighborsRegressor(),GradientBoostingRegressor(),MLPRegressor()]
             try:
                 if algorithm!=st.session_state['Algorithm']:
                     st.session_state['Algorithm']=algorithm
                     st.session_state['best_model']=0
+                    st.session_state['best_result']=0
             except:
                 st.session_state['Algorithm']=algorithm
             algorithm = get_algorithm(algorithm)
@@ -322,10 +340,11 @@ def feature_ML_Train():
                     list_hyper_checked.append(st.checkbox(parameters,help=getInfoParameter(algorithm,parameters,settings=False)))
                     list_hyperpara.append(parameters)
                 st.session_state['ready for training']=True
-                if st.form_submit_button(f'selecteer de hyperparameters voor {algorithm} '):
+                if st.form_submit_button(f'Start tuning {algorithm} '):
                     if True in list_hyper_checked:
                         st.session_state['ready for training']=False
                         st.session_state['best_model']=0
+                        st.session_state['best_result']=0
                     
                         
                 for i in range(len(list_hyper_checked)):
@@ -427,8 +446,8 @@ def feature_ML_Train():
         
         try:replacement = ready_to_train
         except: replacement =False
-        
-        if st.session_state['ready for training'] or replacement:
+        with st.expander("Train the model"):
+            if st.session_state['ready for training'] or replacement:
                     st.session_state['ready for training']=True
                 
                     train_with = st.selectbox('On what output do you want to train',y.keys())
@@ -455,7 +474,7 @@ def feature_ML_Train():
                         if model.cv_results_["mean_test_R^2"][model.best_index_]>= st.session_state['best_result']:
                             st.session_state['best_result']=model.cv_results_["mean_test_R^2"][model.best_index_]
                             st.session_state['best_model'] = model.best_estimator_
-                            st.write(st.session_state['best_result'])
+                            
 
                         
                         
@@ -492,11 +511,12 @@ def feature_ML_Train():
                     #     except:
                     #         st.error('There is no trained model available')
                     
-                    
-                    
-                    st.download_button('Download the trained model',pickle.dumps([st.session_state['best_model'],list(X.keys()),train_with]), train_with+".pkl")
+        st.write(st.session_state['best_result'])
+        if st.session_state["best_model"]!=0:
+                        st.download_button('Download the trained model',pickle.dumps([st.session_state['best_model'],list(X.keys()),train_with]), train_with+".pkl")
                     
 def feature_ML_Predict():
+    text.WF_function_ML_Predict()
     input_for_prediction = pd.DataFrame()
     try:
         uploaded_file = st.file_uploader('Upload your trained model',type=['.pkl'])
@@ -513,7 +533,7 @@ def feature_ML_Predict():
                 except:
                     st.warning('The input must be an integer or a flaot')
             st.form_submit_button(f'predict the output: {loaded_model[2]}')
-        st.write(loaded_model[0].predict(input_for_prediction))  
+        st.metric(loaded_model[2],"{:0.3f}".format(float(loaded_model[0].predict(input_for_prediction))))
     if 'Excel' == input_method and uploaded_file:
         
         
@@ -527,9 +547,10 @@ def feature_ML_Predict():
             st.dataframe(input_for_prediction)
             # import al the data into de dictionary 'val'        
             input_for_prediction[loaded_model[2]]=loaded_model[0].predict(input_for_prediction)
+            st.download_button('Download strength predictions', input_for_prediction.to_csv(sep = ';',index=False,decimal=','), file_name = f'strengthPrediction{loaded_model[2]}.csv')
         except:
             st.warning('Upload your input data first')
-        st.download_button('Download strength predictions', input_for_prediction.to_csv(sep = ';',index=False,decimal=','), file_name = f'strengthPrediction{loaded_model[2]}.csv')
+        
     
 def show_page():
     # logging.basicConfig(filename="myfile.txt",level=logging.DEBUG)
@@ -539,8 +560,8 @@ def show_page():
         {'label':"Experiments"},
         {'label':"Simulation"},
         {'label':"Design of Experiment (DoE)"},
-        {'label':"Database"},
-        {'label':"Machine Learning (ML) "},
+        # {'label':"Database"},
+        {'label':"Machine Learning (ML)"},
         {'label':"Functions",'submenu':[{'label':"DoE"},{'label':"ML-Training"},{'label':"ML-Predicting"}]}]
     over_theme = {'txc_inactive': '#00000','menu_background':'white','txc_active': 'red', }
     menu_id = hc.nav_bar(    

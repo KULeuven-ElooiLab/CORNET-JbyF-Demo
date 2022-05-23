@@ -75,8 +75,9 @@ def intro():
 def analytical_General():
     st.write('''
     ### General
-    Based on several parameters is it possible to predict the force of the joint. These calculations are divided into 2 groups of failure. 
-    Viz, deformation and fracture dominant failure. In the literature, various equations have been found for both the pull-out and the shear 
+    Based on several parameters is it possible to predict the maximum force that the joint can handel. 
+    These calculations are divided into 2 groups of failure. Viz, deformation and fracture dominant 
+    failure. In the literature, various equations have been found for both the pull-out and the shear 
     tensile tests. Based on 50 cases, we defined the best performing equations. 
     ''')
 
@@ -84,20 +85,20 @@ def analytical_General():
             underscript='')
 
     st.write('''
-    Those 4 equations are used in this web application. 
-    To know the strength of the joint in a particular loading condition, you need to calculated the strength of both failure modes. 
-    The lowest calculated strength will be the strength of the joint in that condition. 
+    Those 4 equations are used in this web application. To know the maximum strength of the joint in a 
+    particular loading condition, you need to calculate the strength of both failure modes. 
+    The lowest calculated force will be the strength of the joint and the condition of failure. 
     ''')
 
 def analytical_howItWorks():
     st.write('''
     ### How it works
     On the left, you have the sidebar with all parameters needed for the calculations. 
-    You can fill those in for one particular case. Or, in case you want to predict the strength 
-    of multiple joints at once, there is also a tool where you upload your excel file with all the data. 
+    You can fill those in for one particular case. Or, if you want to predict the strength 
+    of multiple joints at once, there is also a tool where you upload your excel file. 
     You can download the template in the sidebar and re-upload it with your data.
     \n In order to understand the parameters, a small description can be found below. 
-    Also, the discription of the formulas:
+    Together with the discription of the formulas.
     ''')
 
 def analytical_TT():
@@ -217,3 +218,128 @@ def WF_simulations():
 
     centerImage(pathImage='docs/ResultsSimulation.jpg',width='70%',
             underscript='Deviation between the numerical and experimental data of the 50 best simulations')
+
+def WF_DoE():
+    st.write('''
+    ### General
+    From the 73 experiments, we selected the 50 best simulations. With those databases is it possible 
+    to train some basic machine learning algorithms. But, once you use more advanced models, there 
+    is a need for more data. To achieve a larger database, variations are made on the 50 best validated 
+    simulations. With the help of these virtual experiments, we can lower the cost and save resources. 
+    By making several parameters variable, you rapidly end up with a large amount of variations. 
+    Therefore we do a Design of Experiments (DoE) to select 20 variations without losing the overall 
+    responds of all possible combinations. In the function tab above, you can create your own DoE. 
+    Because we are working in a virtual environment, variations on the tools are cheaper to accomplice.   
+    ''')
+
+    centerImage(pathImage='docs/Principle_DoE.jpg',width='70%',
+            underscript='')
+
+    st.write('''
+    ### Variable parameters
+    The parameters are chosen based on there influence on the geometrical parameters and strength of the joint. 	
+    > * Material property: Scaling flow curve
+    > * Process parameter: Bottom thickness tb
+    > * Tool geometry:
+    ''')
+    centerImage(pathImage='docs/VariedParameters.jpg',width='50%',
+            underscript='')
+
+def WF_MachineLearning():
+    st.write('''
+    Genaral
+    ''')
+
+def WF_function_DoE():
+    st.write('''
+    ### How it works
+    With this function is it possible to do your own design of experiment. With the help of the 
+    Latin hypercube sampling method,  a certain amount of samples can be taken from the 
+    larger matrix with all possible combinations. To do the DoE, the following steps need to be undertaken:
+    >   1.	Fill in the names of the parameters you want to vary. There must be at least two variables filled in.
+    >   2.	Open the sidebar by pressing on **'>'** in the top left corner. 
+    >   3.	Select the amount of samples you want to take.
+    >   4.	Define each parameters: discreet or continue and the boundaries.
+    >   5.	Download the DoE under the visualization of the first 2 variables
+
+    ''')
+
+def WF_function_ML_Train():
+    emptycol1,col,emptycol2=st.columns([1,6,1])
+    st.write('''
+    ### How it works
+    This function makes it possible to train six different regression algorithms. Before using 
+    this function, we recommend you to read the machine learning tab first. This will give you 
+    more insight of the working and workflow of machine learning. With this function is it 
+    possible to train and save your best model for each algorithm and output variable. This 
+    is possible after completing the following steps:
+    ''')
+    with st.expander("1.    Define the database:"):
+        st.write('''
+        -Standard, the database of the project is used. There is also the possibility to upload your 
+        own database. Simply upload your file and select uploaded in the drop down menu.
+        ''')
+    
+    with st.expander("2.	Define the in- and output:"):
+        st.write('''
+        Start with selecting the output variables that you want to predict. By pressing on the 
+        button **‘Transfer remaining variables to input’**, all remaining names transfer to the 
+        drop down menu on the right. Delete the variables you don’t need. Once you press on 
+        **‘Set the in- & output’**, a visualization of the database is created with the colors for the in- 
+        and output. Press **‘Yes’** to continue with these settings.
+        ''')
+    
+    with st.expander("3.	Select an algorithm:"):
+        st.write('''
+        Here, you can chose from six regression algorithms. Some are more advanced than 
+        others. And therefore, the more advanced will have more hyperparameters and will 
+        take longer to train. At this point, if you don’t want to tune the hyperparameters, 
+        you can start training a model with the basic settings **(go to step 6)**.
+        ''')
+    
+    with st.expander("4.	Select the hyperparameters that you want the change:"):
+        st.write('''
+        To improve the prediction possibility of the algorithm, it is possible tune the 
+        hyperparameters. If you hover over the **‘?’**, a short description is given for that 
+        hyperparameter. Select the ones you want to change and press on **‘Start tuning …’**
+        ''')
+    
+    with st.expander("5.	Define the boundaries of the hyperparameters:"):
+        st.write('''
+        With the use of a grid search, all possible combinations of hyperparameters will be tried out. 
+        Consequently, training time will increase drastically when you increase the possible 
+        values of the hyperparameters.  Based on the type of the hyperparameter, different boundaries 
+        will be defined. For a integer of float, a min and max boundary needs to be defined. As wall 
+        as an value **‘#’** what divides the interval in that amount of equal parts. The bigger this 
+        value, the more time it will take to train the model. Press **‘Start to train’** when all 
+        boundaries are defined.
+        ''')
+    
+    with st.expander("6.	Train the model:"):
+        st.write('''
+        Because the algorithm can only be trained for one specific output variable at once, 
+        this needs to be selected. Now, press on **‘Train’** and wait until a table and graph is 
+        plotted. In the table can all possible combinations be found with their r²-value. In 
+        the most right column, you can rearrange the table based on their rank. This can help 
+        to tune the hyperparameters even more. In the graph, the prediction against the 
+        measured value can be seen for the best (ranked as number 1) hyper settings. Once 
+        you are satisfied with the result, press on **‘Download the trained model’**. This will 
+        download the best model that you have achieved for that particular algorithm, 
+        hyperparameters and output variable. With this file is it know possible to go to 
+        the function ML-Predicting.
+        ''')
+
+    st.write('''
+    ### Start training
+    ''')
+
+def WF_function_ML_Predict():
+    st.write('''
+    ### How it works
+    Before you can do your prediction, a machine learning model needs to be trained. This 
+    can be done in the function tab ML-training. Once you have this, upload this file below 
+    this text. Now, two options can  be selected in the sidebar:
+    >   1.	**Manual:** Based on the input variables of the model, input field are created in the sidebar. With this method, a fast prediction can be made for one case.
+    >   2.	**Excel:** Based on the input variables of the model, a template (csv file) with the correct column tags can be downloaded. Complete this with your data and save this an excel file. After you re-upload this file, the predictions can be downloaded.
+    ### Start predicting
+    ''')

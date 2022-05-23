@@ -3,7 +3,7 @@ import streamlit as st
 from htbuilder import HtmlElement, div, hr, a, p, img, styles
 from htbuilder.units import percent, px
 
-import Startscherm,DoelVanHetProject,SterkteVoorspellen,WorkflowVoorML
+import Startscherm,DoelVanHetProject,SterkteVoorspellen,WorkflowVoorML,Login
 
 def image(src_as_string, **style):
     return img(src=src_as_string, style=styles(**style))
@@ -84,7 +84,8 @@ pages = [
         DoelVanHetProject,
         SterkteVoorspellen,
         WorkflowVoorML,
-        Startscherm
+        Startscherm,
+        Login
     ]
 
 # when the aplication reruns, the variable 'nr' will not be saved
@@ -92,7 +93,7 @@ pages = [
 if "nr" in st.experimental_get_query_params():
     nr = int(st.experimental_get_query_params()["nr"][0])
 else:
-    nr = 3 # at the first run of the program, 'nr' does not exist yet (initialistaion step)
+    nr = 4 # at the first run of the program, 'nr' does not exist yet (initialistaion step)
     
 # the def show_page returns a number to indicate which tab we want to navigate to.
 # when no pictures are clicked, 'Stratscherm.py' will return -1. This needs to be 3
