@@ -157,8 +157,7 @@ def show_page():
     image2 = Image.open('docs/InputML2.jpg')
     #-- Make it posseble to overlay the image with text 
     colour = (50,50,50)
-    font = ImageFont.load_default()
-    font = ImageFont.load("arial.pil")
+    font = ImageFont.truetype(None,15)
     font1 = ImageFont.truetype("arial.ttf",15)
 
     #-- Write each parameter on the image based on the pixel coordinate
