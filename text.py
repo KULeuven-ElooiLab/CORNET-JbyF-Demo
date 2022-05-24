@@ -52,13 +52,7 @@ def intro():
     last 20 years. In order to ensure further growth of these resource-saving joining processes, 
     new users must be able to design these processes quickly and without extensive process know-how. 
     This goal is pursued in the project proposal described here.
-    """)
-    
-    centerImage(pathImage='docs/IntroPic.png',width='70%',
-            underscript='Visualization of the project goal')
-    
-    st.markdown("""
-    Currently, there are two basic evaluation methods for the design of mechanical joints: 
+    \n Currently, there are two basic evaluation methods for the design of mechanical joints: 
     on the one hand the evaluation of the joint quality via the geometric characteristics 
     of the joint through cross section analysis and on the other hand the evaluation of 
     the joint via the testing of the strength by destructive testing. In principle, it is 
@@ -67,7 +61,8 @@ def intro():
     material thickness combinations has not yet been investigated.
     """)
 
-    
+    centerImage(pathImage='docs/IntroPic.png',width='70%',
+            underscript='Visualization of the project goal')
 
     st.write("""
     \n The aim of the project described here is to enable a prognosis of the joint strength 
@@ -143,6 +138,7 @@ def analytical_TT():
     calculation. In this web App, those shapes are defined by means of the geometrical parameters of the 
     clinching joint. It shown that this enhances the predictive accuracy of the analytical prediction as 
     reported in [[1]](https://www.sciencedirect.com/science/article/pii/S0263823111002679?casa_token=B9vJYddxRZwAAAAA:5qLzJcUV4gLqi2gJPE3CC38byUndCJ8UfmIoVFduI26Dy3b0XCoLJw55gXLHm4FdiM2AsEBYMekKXg).
+    This method is semi analytic due to the fact that the stress needs to be obtained from the FE-model (see 'Description of the calculation parameter'). 
     > *The maximum top tensile force of deformation-dominant failure is calculated according to the improved approach based on Coppieters et al. [[1]](https://www.sciencedirect.com/science/article/pii/S0263823111002679?casa_token=B9vJYddxRZwAAAAA:5qLzJcUV4gLqi2gJPE3CC38byUndCJ8UfmIoVFduI26Dy3b0XCoLJw55gXLHm4FdiM2AsEBYMekKXg)*
     ''')
 
@@ -167,7 +163,7 @@ def analytical_ST():
     the joint and sheets will occur. The most simplified representation is a tube under 
     shear loading. Due to the large deformation and associated strain hardening of the sheets 
     during clinching, the local yield stress has increased. Therefore, numerical data is 
-    needed to determine the yield stress after joining (AFS). The strength for a deformation-dominated 
+    needed to determine the yield stress after joining (AFS)(see 'Description of the calculation parameter'). The strength for a deformation-dominated 
     failure can be computed using:
     ''')
     render_latex(r'''F_{def} = A_n\frac{\sigma_{AFS}}{\sqrt{3}}''')
@@ -294,7 +290,7 @@ def WF_DoE():
 
 def WF_MachineLearning():
     st.write('''
-    🚧 Under construction 🚧
+    Under construction
     ''')
 
 def WF_function_DoE():
