@@ -137,7 +137,7 @@ def show_page():
         *   The corresponding dimensions will be illustrated on the figure below        
         * 	After changing a parameter, the strength is automatically recalculated
         """)
-        st.write("### Results")
+        st.markdown("### Results")
 
     # ----------------Make the prediction---------------------
     
