@@ -280,8 +280,8 @@ def WF_DoE():
     st.write('''
     ### Variable parameters
     The parameter variations  are chosen based on their  influence on the geometrical parameters and strength of the joint. 		
-    > * Material property: Scaling flow curve
-    > * Process parameter: Bottom thickness tb
+    > * Material property: Scaling the flow curve with 10 and 20%. Hereby, investigating the response of stronger material combinations.
+    > * Process parameter: Scaling the bottom thickness tb up to 15%.
     > * Tool geometry: the parameters shown in the figure below are considered as variables.
     ''')
     centerImage(pathImage='docs/VariedParameters.jpg',width='50%',

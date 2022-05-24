@@ -15,7 +15,6 @@ def show_page():
             images.append(f"data:image/jpeg;base64,{encoded}")
     clicked = clickable_images(
         images,
-        titles=['doel','sterkte','workflow'],
         div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
         img_style={ "width":"33%",'border':'1px'},
     )

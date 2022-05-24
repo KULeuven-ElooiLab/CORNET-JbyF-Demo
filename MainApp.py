@@ -25,17 +25,17 @@ def layout(*args):
         position="fixed",
         left=0,
         bottom=0,
-        margin=px(0, 0, 0, 0),
+        margin=px(0, 0, -10, 0),
         width=percent(100),
         color="black",
         text_align="left",
-        height="auto",
+        height="bottom",
         opacity=1
     )
 
     style_hr = styles(
         display="block",
-        margin=px(1, 1, 7, 1),
+        margin=px(1, 1, 5, 1),
         border_style="inset",
         border_width=px(0.5)
     )
@@ -71,9 +71,9 @@ def footer():
         	 height=px(40), marginLeft= "20px")),
 
         link("https://www.fraunhofer.de/en.html",image('https://www.eitfood.eu/media/partners-startups/fraunhofer_fhg.png',
-        	 height=px(40), marginLeft= "20px",marginRight= "20px")),
+        	 height=px(40), marginLeft= "20px", marginRight= "20px")),
 
-        "📝 Contact info: sam.coppieters@kuleuven.be ",
+        "📝 <strong>Contact info:</strong> sam.coppieters@kuleuven.be ",
     ]
     layout(*myargs)
 
