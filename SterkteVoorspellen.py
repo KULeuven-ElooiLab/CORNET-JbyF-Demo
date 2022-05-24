@@ -10,8 +10,8 @@ import Analytical_clinch
 def show_page():
     # Navigationbar
     menu_data = [
-    {'label':"Machine learning"},
-    {'label':"Analytical formulas"}]
+    {'label':"Analytical formulas"},
+    {'label':"Machine learning"}]
 
     over_theme = {'txc_inactive': '#00000','menu_background':'white','txc_active': 'red', }
     menu_id = hc.nav_bar(
