@@ -289,7 +289,7 @@ def WF_DoE():
 
 def WF_MachineLearning():
     st.write('''
-    Under construction
+    Under construction 🚧
     ''')
 
 def WF_function_DoE():
