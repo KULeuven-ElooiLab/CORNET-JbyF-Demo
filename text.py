@@ -128,12 +128,17 @@ def analytical_TT():
 
     st.write('''
     #### Top tensile test
-    The deformation process during a top tensile test can be compared with that of the **tube sinking process without a mandrel**. This implies 
-    that the die-side sheet can be seen as a rigid ‘die’. The most basic formula applies when the clinch is simplified to a tube. Because of 
-    oversimplification, the maximum force will be underestimated. According to Coppieters et al. [[1]](https://www.sciencedirect.com/science/article/pii/S0263823111002679?casa_token=B9vJYddxRZwAAAAA:5qLzJcUV4gLqi2gJPE3CC38byUndCJ8UfmIoVFduI26Dy3b0XCoLJw55gXLHm4FdiM2AsEBYMekKXg), 
-    the bottom part of the clinch contributes to the strength as it is radially compressed when assuming a rigid die (original). If the edges of the shape are more strictly delineated, 
-    by means of the typical geometric parameters, an even better prediction of the force is obtained.
-    > *The maximum top tensile force of **deformation-dominant failure** is calculated according to Coppieters (see below). But with different boundary conditions.*
+    The deformation process during a top tensile test resembles a  **tube sinking process without a mandrel**. 
+    This implies that the die-side sheet can be seen as a rigid ‘die’. The most basic formula applies when 
+    the clinch is simplified to a tube.  However, it is known that this is an oversimplification resulting 
+    in a underestimation of the maximum strength. According to Coppieters et al. [[1]](https://www.sciencedirect.com/science/article/pii/S0263823111002679?casa_token=B9vJYddxRZwAAAAA:5qLzJcUV4gLqi2gJPE3CC38byUndCJ8UfmIoVFduI26Dy3b0XCoLJw55gXLHm4FdiM2AsEBYMekKXg), 
+    the bottom part of the clinch contributes to the strength as it is radially compressed when assuming 
+    a rigid die. In this project, however, some deficiencies of the model proposed in [[1]](https://www.sciencedirect.com/science/article/pii/S0263823111002679?casa_token=B9vJYddxRZwAAAAA:5qLzJcUV4gLqi2gJPE3CC38byUndCJ8UfmIoVFduI26Dy3b0XCoLJw55gXLHm4FdiM2AsEBYMekKXg) were eliminated. 
+    The improvement lies in a better definition of the basic shapes (tube and rod) that enter the analytical 
+    calculation. In this web App, those shapes are defined by means of the geometrical parameters of the 
+    clinching joint. It shown that this enhances the predictive accuracy of the analytical prediction as 
+    reported in [[1]](https://www.sciencedirect.com/science/article/pii/S0263823111002679?casa_token=B9vJYddxRZwAAAAA:5qLzJcUV4gLqi2gJPE3CC38byUndCJ8UfmIoVFduI26Dy3b0XCoLJw55gXLHm4FdiM2AsEBYMekKXg).
+    > *The maximum top tensile force of deformation-dominant failure is calculated according to the improved approach based on Coppieters et al. [[1]](https://www.sciencedirect.com/science/article/pii/S0263823111002679?casa_token=B9vJYddxRZwAAAAA:5qLzJcUV4gLqi2gJPE3CC38byUndCJ8UfmIoVFduI26Dy3b0XCoLJw55gXLHm4FdiM2AsEBYMekKXg)*
     ''')
 
     
@@ -142,21 +147,27 @@ def analytical_TT():
 
     # render_latex(r"F_{def} = {A_{n,tube}\left[\frac{2}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\beta}\right)+\left(\frac{A^{Rod}_{exit}\sigma^{Rod}_{yield}\left(\frac{1+\beta}{\beta}\right)\left[1-\left(\frac{A^{Rod}_{exit}}{A_f}\right)^{\beta}\right]}{A^{Tube}_{entry}}-\frac{2}{\sqrt{3}}\sigma_{yield}^{Tube}\left(\frac{1+\beta}{\beta}\right)\right)\left(\frac{A_{n,tube}}{A^{Tube}_{entry}}\right)^{\beta}\right]}")
     st.write('''
-    The top sheet is the thinnest in the neck region meaning that the joint will fracture in this region. This failure mode can be compared to an 
-    uniaxial tensile test on a tubular specimen with a thickness equal to the neck thickness [[2]](https://www.sciencedirect.com/science/article/pii/S0261306909006220). This calculation is fully analytical when the area is derived from experimental data.
-    > *The **fracture strength** can be calculated as follows:*
+    The top sheet is the thinnest in the neck region meaning that the joint will fracture in this region. 
+    This failure mode resembles a uniaxial tensile test on a tubular specimen with a thickness equal to 
+    the neck thickness  [[2]](https://www.sciencedirect.com/science/article/pii/S0261306909006220). 
+    This calculation is fully analytical when the area is derived from experimental data.
+    > *The fracture strength can be calculated as follows:*
     ''')
     render_latex(r'''F_{frac} = A_n\sigma_{UTS}''')
     
 def analytical_ST():
     st.write('''
     #### Shear lap tensile test
-    When applying a shear load on two clinched sheets, a complex deformation of the joint and sheets will occur. The most simplified 
-    representation is a tube under shear loading. Due to the large deformation and associated strain hardening of the sheets during clinching, the local yield stress has increased.
-    Therefore, numerical data is needed to determine the yield stress after joining (AFS)''')
+    When applying a shear load to a single lap shear specimen, a complex deformation of 
+    the joint and sheets will occur. The most simplified representation is a tube under 
+    shear loading. Due to the large deformation and associated strain hardening of the sheets 
+    during clinching, the local yield stress has increased. Therefore, numerical data is 
+    needed to determine the yield stress after joining (AFS). The strength for a deformation-dominated 
+    failure can be computed using:
+    ''')
     render_latex(r'''F_{def} = A_n\frac{\sigma_{AFS}}{\sqrt{3}}''')
     st.write('''
-    An empirical method was used to calculate the strength until fracture. 
+    An empirical method was used to calculate the strength until fracture [[4]](https://op.europa.eu/nl/publication-detail/-/publication/98b4398c-7df1-4f03-9b14-f753aa063532). 
     ''')
     render_latex(r'''F_{frac} = \frac{t_1\alpha}{4}(2d+\alpha t_1)\pi\sigma_{UTS} \quad with: \quad \alpha=0.4''')
     
