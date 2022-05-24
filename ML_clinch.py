@@ -137,10 +137,10 @@ def show_page():
         *   The corresponding dimensions will be illustrated on the figure below        
         * 	After changing a parameter, the strength is automatically recalculated
         """)
-
+        st.write("### Results")
 
     # ----------------Make the prediction---------------------
-    st.write("### Results")
+    
     emptycol1,col1, col2,emptycol2 = st.columns([1,3,3,1])
     with col1:
         st.write('### Max top tensile strength')
