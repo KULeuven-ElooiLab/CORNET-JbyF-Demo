@@ -137,19 +137,7 @@ def show_page():
         *   The corresponding dimensions will be illustrated on the figure below        
         * 	After changing a parameter, the strength is automatically recalculated
         """)
-        st.markdown("### Results")
-
-    # ----------------Make the prediction---------------------
-    
-    emptycol1,col1, col2,emptycol2 = st.columns([1,3,3,1])
-    with col1:
-        st.write('### Max top tensile strength')
-        st.metric('',"{:0.2f} kN".format(predict_strength("TT")))
-    with col2:
-        st.write('### Max shear strength')
-        st.metric('',"{:0.2f} kN".format(predict_strength("ST")))
-
-
+        st.markdown("### Summary of the input variables")
     # ----------------Display the image---------------------
 
     #-- Open the image
@@ -204,4 +192,15 @@ def show_page():
     with col2:
         st.image(image2)
 
+    # ----------------Make the prediction---------------------
+    emptycol1,col,emptycol2 =st.columns([1,6,1])
+    with col:
+        st.markdown("### Results")
+    emptycol1,col1, col2,emptycol2 = st.columns([1,3,3,1])
+    with col1:
+        st.write('### Max top tensile strength')
+        st.metric('',"{:0.2f} kN".format(predict_strength("TT")))
+    with col2:
+        st.write('### Max shear strength')
+        st.metric('',"{:0.2f} kN".format(predict_strength("ST")))
     return
