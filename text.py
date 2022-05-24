@@ -167,7 +167,7 @@ def analytical_ST():
     ''')
     render_latex(r'''F_{def} = A_n\frac{\sigma_{AFS}}{\sqrt{3}}''')
     st.write('''
-    An empirical method was used to calculate the strength until fracture [[4]](https://op.europa.eu/nl/publication-detail/-/publication/98b4398c-7df1-4f03-9b14-f753aa063532). 
+    An empirical method was used to calculate the strength until fracture [[3]](https://op.europa.eu/nl/publication-detail/-/publication/98b4398c-7df1-4f03-9b14-f753aa063532). 
     ''')
     render_latex(r'''F_{frac} = \frac{t_1\alpha}{4}(2d+\alpha t_1)\pi\sigma_{UTS} \quad with: \quad \alpha=0.4''')
     
