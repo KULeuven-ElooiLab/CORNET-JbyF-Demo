@@ -52,7 +52,13 @@ def intro():
     last 20 years. In order to ensure further growth of these resource-saving joining processes, 
     new users must be able to design these processes quickly and without extensive process know-how. 
     This goal is pursued in the project proposal described here.
-    \n Currently, there are two basic evaluation methods for the design of mechanical joints: 
+    """)
+    
+    centerImage(pathImage='docs/IntroPic.png',width='70%',
+            underscript='Visualization of the project goal')
+    
+    st.markdown("""
+    Currently, there are two basic evaluation methods for the design of mechanical joints: 
     on the one hand the evaluation of the joint quality via the geometric characteristics 
     of the joint through cross section analysis and on the other hand the evaluation of 
     the joint via the testing of the strength by destructive testing. In principle, it is 
@@ -61,8 +67,7 @@ def intro():
     material thickness combinations has not yet been investigated.
     """)
 
-    centerImage(pathImage='docs/IntroPic.png',width='70%',
-            underscript='Visualization of the project goal')
+    
 
     st.write("""
     \n The aim of the project described here is to enable a prognosis of the joint strength 
