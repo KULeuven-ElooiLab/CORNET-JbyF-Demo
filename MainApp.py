@@ -73,7 +73,7 @@ def footer():
         link("https://www.fraunhofer.de/en.html",image('https://www.eitfood.eu/media/partners-startups/fraunhofer_fhg.png',
         	 height=px(40), marginLeft= "20px", marginRight= "20px")),
 
-        "📝 Contact info: sam.coppieters@kuleuven.be ",
+        "📝 <strong>Contact info</strong>: sam.coppieters@kuleuven.be ",
     ]
     layout(*myargs)
 
