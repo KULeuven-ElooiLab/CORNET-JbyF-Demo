@@ -143,7 +143,7 @@ def show_page():
 
     emptycol1,col1, col2,emptycol2 = st.columns([1,3,3,1])
     with col1:
-        st.write('### Max top tensile strenth')
+        st.write('### Max top tensile strength')
         st.metric('',"{:0.2f} kN".format(predict_strength("TT")))
     with col2:
         st.write('### Max shear strength')
