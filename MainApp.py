@@ -93,7 +93,7 @@ pages = [
 if "nr" in st.experimental_get_query_params():
     nr = int(st.experimental_get_query_params()["nr"][0])
 else:
-    nr = 4 # at the first run of the program, 'nr' does not exist yet (initialistaion step)
+    nr = 3 # at the first run of the program, 'nr' does not exist yet (initialistaion step)
     
 # the def show_page returns a number to indicate which tab we want to navigate to.
 # when no pictures are clicked, 'Stratscherm.py' will return -1. This needs to be 3
