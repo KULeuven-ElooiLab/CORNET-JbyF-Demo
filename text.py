@@ -204,7 +204,7 @@ def WF_experiments():
     ''')
 
     centerImage(pathImage='docs/ProcessCurve.jpg',width='40%',
-            underscript='')
+            underscript='A typical process curve of the clinching process with a maximum setting force of 43 kN.')
 
     st.write('''
     The typical geometrical parameters were also measured via a cross-section analysis. These parameters were 
@@ -213,7 +213,7 @@ def WF_experiments():
     ''')
     
     centerImage(pathImage='docs/CrossSection-M.png',width='60%',
-            underscript='')
+            underscript='The contour of the clinch with the measurments of the geometrical parameters.')
 
     st.write('''
     ### Experimental data of the joint strength
@@ -231,22 +231,22 @@ def WF_simulations():
     with only experimental data, but this would be costly and labor intensive. Therefore, in the second step, 
     we replicate the experiments using a FE-software called 
     [Simufact forming](https://www.simufact.com/simufactforming-forming-simulation.html). In this project, 
-    our aim was to find a trade-off between computational effort and predictive accuracy of the FE model 
-    considering the three simulation steps (joining, pull-out and shear lap testing). Through existing functions 
-    in this software, it was possible to automate the results transfer from the joining simulation to the strength 
-    test. Which decreased the conversion time drastically.
+    our aim was to find a trade-off between computational effort and predictive accuracy of the FEM 
+    considering the three simulation steps (joining, pull-out and shear lap testing). Through existing features 
+    within this software, it was possible to automate the results transfer from the joining simulation to the strength 
+    test. Which decreased the total conversion time drastically.
     ### Simulation
     Before we can calculate the strength of the joint with the FE-software, the material must be characterized and 
-    a friction model must be selected. It was shown in a previous project [1](https://cornet.efb.de/general-description-flow-curve-jbyf.html ) that the clinching forming simulation 
+    a friction model must be selected. It was shown in a previous project [[1]](https://cornet.efb.de/general-description-flow-curve-jbyf.html ) that the clinching forming simulation 
     is most accurate when measuring the flow curve using the stack compression test. Consequently, all 
-    flow curves in this project are determined using the stack compression test. The combined friction 
-    method is deeded an appropriate model for mechanical joining simulations. It is shown that this frictional 
+    flow curves in this project are determined using the stack compression test. The combined friction method is an appropriate model 
+    for mechanical joining simulations. It is shown that this frictional 
     model enables to accurately simulate the metal flow during joining. The governing parameters of the 
     combined friction model were individually tuned for all 73 cases.
     ''')
 
     centerImage(pathImage='docs/Simulation-Strategy.jpg',width='70%',
-            underscript='Deviation between the numerical and experimental data of the 50 best simulations')
+            underscript='Simulation strategy,starting with the joining on the left side and import the result into the strength tests on the right side.')
 
     st.write('''
     For the simulation of the joining process (see below) and the pull-out test, an axisymmetric (2D) 
@@ -276,7 +276,7 @@ def WF_DoE():
     ''')
 
     centerImage(pathImage='docs/Principle_DoE.jpg',width='70%',
-            underscript='')
+            underscript='Data acquisition on the basis of the validated database. Going from 50 joints upto 1000 with DoE.')
 
     st.write('''
     ### Variable parameters
@@ -286,7 +286,7 @@ def WF_DoE():
     > * Tool geometry: the parameters shown in the figure below are considered as variables.
     ''')
     centerImage(pathImage='docs/VariedParameters.jpg',width='50%',
-            underscript='')
+            underscript='The tool geometry is discribed with these parameters and are varied over a dicreet or continu interval.')
 
 def WF_MachineLearning():
     st.write('''
