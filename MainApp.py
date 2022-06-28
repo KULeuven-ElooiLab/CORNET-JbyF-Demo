@@ -84,8 +84,7 @@ pages = [
         DoelVanHetProject,
         SterkteVoorspellen,
         WorkflowVoorML,
-        Startscherm,
-        Login
+        Startscherm
     ]
 
 # when the aplication reruns, the variable 'nr' will not be saved
