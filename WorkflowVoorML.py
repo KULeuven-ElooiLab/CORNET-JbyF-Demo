@@ -573,26 +573,42 @@ def show_page():
         sticky_nav=True, #at the top or not
         sticky_mode='sticky', #jumpy or not-jumpy, but sticky or pinned
             )
-    emptycol1,col1,emptycol2 = st.columns([1,6,1])
-    with col1:
-    # start a def based on the selected tab in the navigationbar
-        if menu_id == "Experiments":
-                experimenten()
-        if menu_id == "Simulation":
-            simulerenExperimenten()
-        if menu_id == "Design of Experiment (DoE)":
-                DoE()
-        if menu_id == "Database":
-                OpbouwDatabase()
-        if menu_id == "Machine Learning (ML)":
-                ML()
-        if menu_id == "DoE":
-                feature_DoE()
-        if menu_id == "ML-Predicting":
-            feature_ML_Predict()
-    if menu_id == "ML-Training":
-            feature_ML_Train()
     
+    if 'login' not in st.session_state:
+        emptycol1, col, emptycol2 =st.columns([1,0.5,1])
+        username = col.text_input('Username')
+        password = col.text_input('Password',type='password')
+        if col.button("Log in"):
+            if username =='JbyF' and password == "Cornet":
+                st.session_state["login"]=True
+                st.experimental_rerun()
+            else:
+                col.warning("Username or password is not correct.") 
+                
+    
+    if 'login' in st.session_state and st.session_state["login"]==True:
+        emptycol1,col1,emptycol2 = st.columns([1,6,1])
+        with col1:
+            # start a def based on the selected tab in the navigationbar
+            if menu_id == "Experiments":
+                experimenten()
+            if menu_id == "Simulation":
+                simulerenExperimenten()
+            if menu_id == "Design of Experiment (DoE)":
+                DoE()
+            if menu_id == "Database":
+                OpbouwDatabase()
+            if menu_id == "Machine Learning (ML)":
+                ML()
+            if menu_id == "DoE":
+                feature_DoE()
+            if menu_id == "ML-Predicting":
+                feature_ML_Predict()
+        if menu_id == "ML-Training":
+            feature_ML_Train()        
+
     if menu_id == "Home":
-            return 3
+        st.session_state.clear()
+        return 3        
     return 2
+    
