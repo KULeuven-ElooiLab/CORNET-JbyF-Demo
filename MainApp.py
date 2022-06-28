@@ -3,7 +3,7 @@ import streamlit as st
 from htbuilder import HtmlElement, div, hr, a, p, img, styles
 from htbuilder.units import percent, px
 
-import Startscherm,DoelVanHetProject,SterkteVoorspellen,WorkflowVoorML,Login
+import Startscherm,DoelVanHetProject,SterkteVoorspellen,WorkflowVoorML
 
 def image(src_as_string, **style):
     return img(src=src_as_string, style=styles(**style))
