@@ -129,15 +129,8 @@ def show_page():
     # Title the app
     emptycol1,col,emptycol2 =st.columns([1,6,1])
     with col:
-        st.markdown('## Strength prognosis based on machine learning')
-
         text.Machine_General()
-        st.markdown("""
-        * 	Use the menu on the left to alter the input parameters
-        *   The corresponding dimensions will be illustrated on the figure below        
-        * 	After changing a parameter, the strength is automatically recalculated
-        """)
-        st.markdown("### Summary of the input variables")
+        
     # ----------------Display the image---------------------
 
     #-- Open the image
