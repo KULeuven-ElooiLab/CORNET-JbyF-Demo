@@ -184,6 +184,9 @@ def  Machine_General():
     st.write('''
     ## Strength prognosis based on machine learning
     ### General
+    Based on the data that is available in the database, a model type can be selected. For this project, regression models 
+    were trained because the database includes only numerical data. The the pre-processing, training, hyper parameter optimization 
+    and validation is all done with the open-source library scikit-learn.
     ''')
 
     centerImage(pathImage='docs/ML1.jpg',width='65%',
