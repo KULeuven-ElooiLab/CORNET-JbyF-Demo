@@ -184,15 +184,15 @@ def  Machine_General():
     st.write('''
     ## Strength prognosis based on machine learning
     ### General
-    * 	Use the menu on the left to alter the input parameters
-    *   The corresponding dimensions will be illustrated on the figure below        
-    * 	After changing a parameter, press 'apply change' to recalculate the strengths
     ''')
 
     centerImage(pathImage='docs/ML1.jpg',width='65%',
             underscript='')
     
     st.write('''
+    * 	Use the menu on the left to alter the input parameters
+    *   The corresponding dimensions will be illustrated on the figure below        
+    * 	After changing a parameter, press 'apply changes' to recalculate the strengths
     ### Summary of the input variables
     ''')
 
