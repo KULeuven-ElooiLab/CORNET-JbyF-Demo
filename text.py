@@ -186,12 +186,15 @@ def  Machine_General():
     ### General
     * 	Use the menu on the left to alter the input parameters
     *   The corresponding dimensions will be illustrated on the figure below        
-    * 	After changing a parameter, the strength is automatically recalculated
-    ### Summary of the input variables
+    * 	After changing a parameter, press 'apply change' to recalculate the strengths
     ''')
 
     centerImage(pathImage='docs/ML1.jpg',width='65%',
             underscript='')
+    
+    st.write('''
+    ### Summary of the input variables
+    ''')
 
 def WF_experiments():
     st.write('''
