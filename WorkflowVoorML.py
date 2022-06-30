@@ -56,7 +56,8 @@ def OpbouwDatabase():
     st.dataframe(data)
 
 def ML():
-    with st.expander(":construction: under construction"):
+    st.write(:construction:)
+    with st.expander(":construction: :construction: under construction"):
         text.WF_MachineLearning()
 
 def feature_DoE():
