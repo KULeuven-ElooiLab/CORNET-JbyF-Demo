@@ -55,7 +55,8 @@ def OpbouwDatabase():
     data = pd.read_excel("docs/TrainDatabase_712.xlsx")
     st.dataframe(data)
 
-def M: st.expander("🚧 under construction 🚧"):
+def ML:
+    with st.expander("🚧 under construction 🚧"):
         text.WF_MachineLearning()
 
 def feature_DoE():
