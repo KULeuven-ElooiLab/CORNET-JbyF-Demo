@@ -298,10 +298,17 @@ def WF_DoE():
 def WF_MachineLearning():
     st.write('''
     ### General
-    Based on the data that is available in the database, a model type can be selected. For this project, regression models 
-    were trained because the database includes only numerical data. The the pre-processing, training, hyper parameter optimization 
-    and validation is all done with the open-source library scikit-learn.
-    Under construction
+    Based on the data that is available in the database, a model type can be selected. For this project, regression models were 
+    trained because the database includes only numerical data. Before the training of the model, pre-processing of the database 
+    can be done to improve the accuracy of the data-based models. By pre-processing the data, input features are scaled in such 
+    manner that a feature such as the setting force, which is in the order of 50.000 N, has the same influence on the result as 
+    a feature such as the interlock, which is in the order of 0,1 mm. Now the database is ready to use, an regression algorithm 
+    must be selected. To improve the prediction accuracy, hyper parameters of the algorithms can be tuned. These are parameters 
+    such as, the amount of neighbours for the KNN-algorithm that are not changed by the algorithm itself. To find the best hyper 
+    parameters, a grid search is performed that trains the model for all possible combinations of parameters within the defined 
+    intervals. In order to define the best model, the R²-value is calculated between the predicted and true value. 
+
+    The pre-processing, training, hyper parameter optimization and validation is all done with the open-source library scikit-learn.
     ''')
 
 def WF_function_DoE():
