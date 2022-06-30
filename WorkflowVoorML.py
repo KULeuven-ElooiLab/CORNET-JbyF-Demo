@@ -56,7 +56,8 @@ def OpbouwDatabase():
     st.dataframe(data)
 
 def ML():
-    text.WF_MachineLearning()
+    st.expander('under construction'):
+        text.WF_MachineLearning()
 
 def feature_DoE():
     def transform(listvar,continuity, colomLHS,col):
