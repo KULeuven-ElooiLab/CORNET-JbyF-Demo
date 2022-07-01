@@ -512,7 +512,7 @@ def feature_ML_Train():
                     #     except:
                     #         st.error('There is no trained model available')
                     
-        st.write(st.session_state['best_result'])
+        st.write(algorithm)
         if st.session_state["best_model"]!=0:
                         st.download_button('Download the trained model',pickle.dumps([st.session_state['best_model'],list(X.keys()),train_with]), train_with+algorithm+".pkl")
                     
