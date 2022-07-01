@@ -514,7 +514,7 @@ def feature_ML_Train():
                     
         st.write(st.session_state['best_result'])
         if st.session_state["best_model"]!=0:
-                        st.download_button('Download the trained model',pickle.dumps([st.session_state['best_model'],list(X.keys()),train_with]), train_with+".pkl")
+                        st.download_button('Download the trained model',pickle.dumps([st.session_state['best_model'],list(X.keys()),train_with]), train_with+algorithm+".pkl")
                     
 def feature_ML_Predict():
     text.WF_function_ML_Predict()
