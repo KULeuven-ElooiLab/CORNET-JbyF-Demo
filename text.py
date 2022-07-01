@@ -310,6 +310,9 @@ def WF_MachineLearning():
 
     The pre-processing, training, hyper parameter optimization and validation is all done with the open-source library scikit-learn.
     ''')
+    
+    centerImage(pathImage='docs/ProcedureML.jpg',width='70%',
+            underscript='Procedure for the development of a learning algorithm')
 
 def WF_function_DoE():
     st.write('''
