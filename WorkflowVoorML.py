@@ -119,10 +119,7 @@ def feature_DoE():
         # list with name, discreet/continu, interval
         list_var.append(list_temp)
     
-    # with st.sidebar.form('select parameters to visualize'):
-    #         xlabel = st.selectbox(list_var[0])
-    #         if st.form_submit_button("Plot "):
-    #             st.write('niels')
+    
 
     
     # display the charters for 2 values
@@ -141,7 +138,7 @@ def feature_DoE():
                 axs[0].axvline(x=(i+1)/samp, color='grey')
                 axs[0].axhline(y=(i+1)/samp, color='grey')
                 axs[0].plot(x[:, 0], x[:, 1], "o")
-        axs[0].set_xlabel(f"x1 ({list_var[1][0]})")
+        axs[0].set_xlabel(f"x1 ({list_var[0][0]})")
         axs[0].set_ylabel(f"x2 ({list_var[1][0]})")
         axs[0].set_xlim(xmin = 0, xmax = 1)
         axs[0].set_ylim(ymin = 0, ymax = 1)
@@ -163,9 +160,9 @@ def feature_DoE():
         val={}
         for j in range(len(keywords)):
             temp = []
-        for i in range(samp):
-            temp.append(x[i][j])
-        val[keywords[j]]=temp
+            for i in range(samp):
+                temp.append(x[i][j])
+            val[keywords[j]]=temp
         
         # add the results to the dataframe
         df = pd.DataFrame.from_dict(val)
